@@ -54,7 +54,7 @@ class QuoteService
         return $this->cart->quotes;
     }
 
-    public function totals()
+    public function getTotals()
     {
         return new TotalService($this->cart->quotes);
     }
