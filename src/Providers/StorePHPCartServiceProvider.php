@@ -3,6 +3,7 @@
 namespace Storephp\Cart\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Storephp\Cart\Services\CartService;
 
 class StorePHPCartServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,7 @@ class StorePHPCartServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('storephp.cart.cartservice', CartService::class);
     }
 
     /**
@@ -23,6 +24,8 @@ class StorePHPCartServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if ($this->app->runningInConsole()) {
+            $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        }
     }
 }
