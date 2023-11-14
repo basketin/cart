@@ -20,6 +20,6 @@ class CartService
             $cart = $this->cartRepository->createNewCart($ulid, $currency);
         }
 
-        return $cart;
+        return new QuoteService($cart);
     }
 }

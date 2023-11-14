@@ -4,14 +4,14 @@ namespace Storephp\Cart\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cart extends Model
+class Quote extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'storephp_carts';
+    protected $table = 'storephp_cart_quotes';
 
     /**
      * The attributes that are mass assignable.
@@ -19,9 +19,8 @@ class Cart extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'ulid',
-        'currency',
-        'status',
+        'cart_id',
+        'quantity',
     ];
 
     /**
@@ -30,11 +29,11 @@ class Cart extends Model
      * @var array
      */
     protected $with = [
-        'quotes',
+        'item',
     ];
 
-    public function quotes()
+    public function item()
     {
-        return $this->hasMany(Quote::class, 'cart_id', 'id');
+        return $this->morphTo();
     }
 }
