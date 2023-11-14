@@ -14,5 +14,12 @@
             "email": "komicho1996@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Storephp\\Cart\\Providers\\StorePHPCartServiceProvider"
+            ]
+        }
+    }
 }
