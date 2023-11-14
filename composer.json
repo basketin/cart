@@ -1,0 +1,18 @@
+{
+    "name": "storephp/cart",
+    "description": "Cart for eCommerce store",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Storephp\\Cart\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Karim Mohamed",
+            "email": "komicho1996@gmail.com"
+        }
+    ],
+    "require": {}
+}
