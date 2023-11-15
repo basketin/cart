@@ -44,6 +44,15 @@ class QuoteService
         }
     }
 
+    public function removeQuote(IQuote $item)
+    {
+        if ($_item = $item->quote()->first()) {
+            $_item->delete();
+        }
+
+        return $this;
+    }
+
     public function getCart()
     {
         return $this->cart;
