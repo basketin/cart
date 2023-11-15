@@ -15,6 +15,11 @@ class StorePHPCartServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('storephp.cart.cartservice', CartService::class);
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../config/cart.php',
+            'storephp.cart'
+        );
     }
 
     /**
@@ -25,6 +30,10 @@ class StorePHPCartServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__ . '/../../config/cart.php' => config_path('storephp/cart.php'),
+            ]);
+
             $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         }
     }

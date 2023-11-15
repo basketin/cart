@@ -4,7 +4,9 @@ namespace Storephp\Cart\Services;
 
 use Storephp\Cart\Contracts\IQuote;
 use Storephp\Cart\Exceptions\QuoteNotFoundException;
+use Storephp\Cart\Exceptions\QuoteQuantityLimitException;
 use Storephp\Cart\Models\Cart;
+use Storephp\Cart\Settings\QuoteQuantityLimit;
 
 class QuoteService
 {
@@ -15,9 +17,8 @@ class QuoteService
 
     public function addQuote(IQuote $item, $quantity = 1)
     {
-        if ($_item = $item->quote()->first()) {
-            $_item->quantity += $quantity;
-            $_item->save();
+        if ($item->quote()->first()) {
+            $this->increaseQuote($item, $quantity);
             return $this;
         }
 
@@ -33,6 +34,10 @@ class QuoteService
     {
         if (!$_item = $item->quote()->first()) {
             throw new QuoteNotFoundException;
+        }
+
+        if ($_item->quantity >= QuoteQuantityLimit::getLimit()) {
+            throw new QuoteQuantityLimitException;
         }
 
         $_item->increment('quantity', $quantity);
