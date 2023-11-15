@@ -3,6 +3,7 @@
 namespace Storephp\Cart\Services;
 
 use Storephp\Cart\Contracts\IQuote;
+use Storephp\Cart\Exceptions\QuoteNotFoundException;
 use Storephp\Cart\Models\Cart;
 
 class QuoteService
@@ -30,25 +31,33 @@ class QuoteService
 
     public function increaseQuote(IQuote $item, $quantity = 1)
     {
-        if ($_item = $item->quote()->first()) {
-            $_item->increment('quantity', $quantity);
-            return $this;
+        if (!$_item = $item->quote()->first()) {
+            throw new QuoteNotFoundException;
         }
+
+        $_item->increment('quantity', $quantity);
+
+        return $this;
     }
 
     public function decreaseQuote(IQuote $item, $quantity = 1)
     {
-        if ($_item = $item->quote()->first()) {
-            $_item->decrement('quantity', $quantity);
-            return $this;
+        if (!$_item = $item->quote()->first()) {
+            throw new QuoteNotFoundException;
         }
+
+        $_item->decrement('quantity', $quantity);
+
+        return $this;
     }
 
     public function removeQuote(IQuote $item)
     {
-        if ($_item = $item->quote()->first()) {
-            $_item->delete();
+        if (!$_item = $item->quote()->first()) {
+            throw new QuoteNotFoundException;
         }
+
+        $_item->delete();
 
         return $this;
     }
