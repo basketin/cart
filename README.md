@@ -37,6 +37,20 @@ use Storephp\Cart\Facades\CartManagement;
 $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD'); // <- ULID
 ```
 
+You can open the cart if it exists or create a new cart if not exist.
+
+#### Open Exist Cart
+
+```php
+<?php
+
+use Storephp\Cart\Facades\CartManagement;
+
+$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
+```
+
+Open the existing cart only
+
 #### Add Quote
 
 ```php
@@ -47,7 +61,7 @@ use Storephp\Cart\Facades\CartManagement;
 
 $product = Product::first();
 
-$cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD'); // <- ULID
+$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
 $cart->addQuote($product, 1);
 ```
 
@@ -90,7 +104,7 @@ use Storephp\Cart\Facades\CartManagement;
 
 $product = Product::first();
 
-$cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD'); // <- ULID
+$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
 $cart->increaseQuote($product, 5);
 ```
 
@@ -104,8 +118,22 @@ use Storephp\Cart\Facades\CartManagement;
 
 $product = Product::first();
 
-$cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD'); // <- ULID
+$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
 $cart->decreaseQuote($product, 2);
+```
+
+#### Remove Quote
+
+```php
+<?php
+
+use App\Models\Product;
+use Storephp\Cart\Facades\CartManagement;
+
+$product = Product::first();
+
+$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
+$cart->removeQuote($product);
 ```
 
 #### Get Cart
