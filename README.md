@@ -49,6 +49,18 @@ use Storephp\Cart\Facades\CartManagement;
 $cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
 ```
 
+#### Get Ulid
+
+```php
+$cart->getUlid();
+```
+
+#### Get Currency
+
+```php
+$cart->getCurrency();
+```
+
 Open the existing cart only
 
 #### Add Quote
@@ -62,7 +74,7 @@ use Storephp\Cart\Facades\CartManagement;
 $product = Product::first();
 
 $cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
-$cart->addQuote($product, 1);
+$cart->quote()->addQuote($product, 1);
 ```
 
 You need preparing `Product` model to use like this.
@@ -105,7 +117,7 @@ use Storephp\Cart\Facades\CartManagement;
 $product = Product::first();
 
 $cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
-$cart->increaseQuote($product, 5);
+$cart->quote()->increaseQuote($product, 5);
 ```
 
 #### Decrease Quote
@@ -119,7 +131,7 @@ use Storephp\Cart\Facades\CartManagement;
 $product = Product::first();
 
 $cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
-$cart->decreaseQuote($product, 2);
+$cart->quote()->decreaseQuote($product, 2);
 ```
 
 #### Remove Quote
@@ -133,7 +145,7 @@ use Storephp\Cart\Facades\CartManagement;
 $product = Product::first();
 
 $cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
-$cart->removeQuote($product);
+$cart->quote()->removeQuote($product);
 ```
 
 #### Get Cart
@@ -155,7 +167,7 @@ $cart->getCart();
 use Storephp\Cart\Facades\CartManagement;
 
 $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
-$cart->getQuotes();
+$cart->quote()->getQuotes();
 ```
 
 #### Get Totals
@@ -166,7 +178,7 @@ $cart->getQuotes();
 use Storephp\Cart\Facades\CartManagement;
 
 $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
-$totals = $cart->getTotals();
+$totals = $cart->totals();
 $totals->getSubTotal();
 $totals->getDiscountTotal();
 $totals->getGrandTotal();

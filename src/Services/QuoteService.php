@@ -67,10 +67,10 @@ class QuoteService
         return $this;
     }
 
-    public function getCart()
-    {
-        return $this->cart;
-    }
+    // public function getCart()
+    // {
+    //     return $this->cart;
+    // }
 
     public function getQuotes()
     {
