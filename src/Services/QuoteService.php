@@ -51,6 +51,11 @@ class QuoteService
             throw new QuoteNotFoundException;
         }
 
+        if ($_item->quantity <= $quantity) {
+            $_item->delete();
+            return false;
+        }
+
         $_item->decrement('quantity', $quantity);
 
         return $this;
