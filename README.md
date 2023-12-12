@@ -61,6 +61,18 @@ $cart->getUlid();
 $cart->getCurrency();
 ```
 
+#### Get Count Products
+
+```php
+$cart->getCountProducts();
+```
+
+#### Get Count items
+
+```php
+$cart->getCountItems();
+```
+
 Open the existing cart only
 
 #### Add QuoteYou need to prepare a `Product` model to use like this.
@@ -118,6 +130,20 @@ $product = Product::first();
 
 $cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
 $cart->quote()->decreaseQuote($product, 2);
+```
+
+#### Has Quote
+
+```php
+<?php
+
+use App\Models\Product;
+use Storephp\Cart\Facades\CartManagement;
+
+$product = Product::first();
+
+$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
+$cart->quote()->hasQuote($product);
 ```
 
 #### Remove Quote

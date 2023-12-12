@@ -63,6 +63,16 @@ class CartService
         return $this->cart;
     }
 
+    public function getCountProducts()
+    {
+        return $this->cart->quotes()->count();
+    }
+
+    public function getCountItems()
+    {
+        return $this->cart->quotes()->sum('quantity');
+    }
+
     public function quote()
     {
         return new QuoteService($this->cart);
