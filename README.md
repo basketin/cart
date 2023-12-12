@@ -219,6 +219,34 @@ $coupon = Coupon::first();
 $cart->coupon($coupon);
 ```
 
+### Fields
+
+You can create fields that contain a key and values for each shopping cart.
+
+#### Set Field
+
+```php
+return $cart->fields()->set('key', 'value');
+```
+
+#### Get Field
+
+```php
+return $cart->fields()->get('key');
+```
+
+#### Remove
+
+```php
+return $cart->fields()->remove('key');
+```
+
+#### Has Field
+
+```php
+return $cart->fields()->has('key');
+```
+
 ## Contributing
 
 Thank you for considering contributing to this package! Be one of the Store team.

@@ -7,6 +7,7 @@ use Storephp\Cart\Contracts\ICoupon;
 use Storephp\Cart\Exceptions\CartNotFoundException;
 use Storephp\Cart\Models\Cart;
 use Storephp\Cart\Repositories\CartRepository;
+use Storephp\Cart\Services\FieldService;
 
 class CartService
 {
@@ -16,6 +17,7 @@ class CartService
         private CartRepository $cartRepository,
         private Cart $cart
     ) {
+        $this->fields = $cart->fields;
     }
 
     public function initCart($ulid = null, $currency = 'USD')
@@ -64,6 +66,11 @@ class CartService
     public function quote()
     {
         return new QuoteService($this->cart);
+    }
+
+    public function fields()
+    {
+        return new FieldService($this->cart);
     }
 
     public function coupon(ICoupon $coupon)
