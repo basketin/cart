@@ -3,12 +3,15 @@
 namespace Storephp\Cart\Services;
 
 use Illuminate\Support\Str;
+use Storephp\Cart\Contracts\ICoupon;
 use Storephp\Cart\Exceptions\CartNotFoundException;
 use Storephp\Cart\Models\Cart;
 use Storephp\Cart\Repositories\CartRepository;
 
 class CartService
 {
+    private $coupon = null;
+
     public function __construct(
         private CartRepository $cartRepository,
         private Cart $cart
@@ -63,8 +66,18 @@ class CartService
         return new QuoteService($this->cart);
     }
 
+    public function coupon(ICoupon $coupon)
+    {
+        $this->coupon = $coupon;
+    }
+
+    public function couponInfo()
+    {
+        return $this->coupon;
+    }
+
     public function totals()
     {
-        return new TotalService($this->cart->quotes);
+        return new TotalService($this->cart->quotes, $this->coupon);
     }
 }

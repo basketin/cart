@@ -7,7 +7,7 @@
 
 # StorePHP Cart
 
-Cart module for eCommerce system based on laravel.
+Cart module for eCommerce system based on Laravel.
 
 ## Documentation
 
@@ -63,21 +63,7 @@ $cart->getCurrency();
 
 Open the existing cart only
 
-#### Add Quote
-
-```php
-<?php
-
-use App\Models\Product;
-use Storephp\Cart\Facades\CartManagement;
-
-$product = Product::first();
-
-$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
-$cart->quote()->addQuote($product, 1);
-```
-
-You need preparing `Product` model to use like this.
+#### Add QuoteYou need to prepare a `Product` model to use like this.
 
 ```php
 // Product model
@@ -184,11 +170,53 @@ $totals->getDiscountTotal();
 $totals->getGrandTotal();
 ```
 
-If you need to add global discount on cart you can use.
+If you need to add a global discount to the cart you can use it.
 
 ```php
 $totals->setGlobalDiscountTotal(500.00)
     ->getGrandTotal();
+```
+
+### Coupon
+
+#### Coupon model
+
+You need to prepare a coupon model to inject into cart services
+
+```php
+use Illuminate\Database\Eloquent\Model;
+use Storephp\Cart\Contracts\ICoupon;
+
+class Coupon extends Model implements ICoupon
+{
+    protected $fillable = [
+        'coupon_name',
+        'coupon_code',
+        'discount_type',
+        'discount_value',
+        'start_at',
+        'ends_at',
+    ];
+
+    public function discountType(): String
+    {
+        return $this->discount_type;
+    }
+
+    public function discountValue(): Int
+    {
+        return $this->discount_value;
+    }
+}
+```
+
+> The discount type: `fixed` = `CouponCalculate::FIXED` | `percent` = `CouponCalculate::PERCENT`
+
+To apply coupon code on cart:-
+
+```php
+$coupon = Coupon::first();
+$cart->coupon($coupon);
 ```
 
 ## Contributing

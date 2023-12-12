@@ -4,6 +4,7 @@ namespace Storephp\Cart\Services;
 
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
+use Storephp\Cart\Calculate\CouponCalculate;
 use Storephp\Cart\Traits\HasTotal;
 
 class TotalService
@@ -15,7 +16,8 @@ class TotalService
     private $globalDiscountTotal = null;
 
     public function __construct(
-        private Collection $quotes
+        private Collection $quotes,
+        private $coupon = null,
     ) {
         if (!in_array(
             HasTotal::class,
@@ -45,6 +47,12 @@ class TotalService
 
     public function getSubTotal(): float
     {
+        if ($this->coupon) {
+            return (float) (new CouponCalculate($this->coupon))
+                ->setSubTotal($this->subTotal)
+                ->getSubTotal();
+        }
+
         return (float) $this->subTotal;
     }
 
