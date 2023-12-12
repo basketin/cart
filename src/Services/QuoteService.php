@@ -56,6 +56,11 @@ class QuoteService
         return $this;
     }
 
+    public function hasQuote(IQuote $item)
+    {
+        return $item->quote()->exists();
+    }
+
     public function removeQuote(IQuote $item)
     {
         if (!$_item = $item->quote()->first()) {
@@ -77,8 +82,8 @@ class QuoteService
         return $this->cart->quotes;
     }
 
-    public function getTotals()
-    {
-        return new TotalService($this->cart->quotes);
-    }
+    // public function getTotals()
+    // {
+    //     return new TotalService($this->cart->quotes);
+    // }
 }

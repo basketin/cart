@@ -52,6 +52,33 @@ test('Decrease Quote', function () {
     expect($cart->quote()->getQuotes()->toArray()[0]['quantity'])->toEqual(3);
 });
 
+test('Has Quote', function () {
+    $product = Product::create([
+        'name' => 'xBox',
+        'sku' => 12345,
+        'price' => 599,
+
+    ]);
+
+    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart->quote()->addQuote($product, 1);
+
+    expect($cart->quote()->hasQuote($product))->toEqual(true);
+});
+
+test('Not Has Quote', function () {
+    $product = Product::create([
+        'name' => 'xBox',
+        'sku' => 12345,
+        'price' => 599,
+
+    ]);
+
+    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+
+    expect($cart->quote()->hasQuote($product))->toEqual(false);
+});
+
 test('Remove Quote', function () {
     $product = Product::create([
         'name' => 'xBox',
