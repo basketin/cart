@@ -1,6 +1,6 @@
 <?php
 
-use Storephp\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Facades\CartManagement;
 
 test('Set Field', function () {
     $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');

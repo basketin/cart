@@ -1,7 +1,7 @@
 <?php
 
-use Storephp\Cart\Facades\CartManagement;
-use Storephp\Cart\Tests\App\Models\Product;
+use Basketin\Component\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Tests\App\Models\Product;
 
 test('Get Subtotal', function () {
     $product = Product::create([

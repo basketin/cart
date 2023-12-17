@@ -1,8 +1,8 @@
 <?php
 
-namespace Storephp\Cart\Calculate;
+namespace Basketin\Component\Cart\Calculate;
 
-use Storephp\Cart\Contracts\ICoupon;
+use Basketin\Component\Cart\Contracts\ICoupon;
 
 class CouponCalculate
 {

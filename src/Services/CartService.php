@@ -1,13 +1,13 @@
 <?php
 
-namespace Storephp\Cart\Services;
+namespace Basketin\Component\Cart\Services;
 
 use Illuminate\Support\Str;
-use Storephp\Cart\Contracts\ICoupon;
-use Storephp\Cart\Exceptions\CartNotFoundException;
-use Storephp\Cart\Models\Cart;
-use Storephp\Cart\Repositories\CartRepository;
-use Storephp\Cart\Services\FieldService;
+use Basketin\Component\Cart\Contracts\ICoupon;
+use Basketin\Component\Cart\Exceptions\CartNotFoundException;
+use Basketin\Component\Cart\Models\Cart;
+use Basketin\Component\Cart\Repositories\CartRepository;
+use Basketin\Component\Cart\Services\FieldService;
 
 class CartService
 {

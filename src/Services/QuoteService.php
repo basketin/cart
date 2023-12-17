@@ -1,12 +1,12 @@
 <?php
 
-namespace Storephp\Cart\Services;
+namespace Basketin\Component\Cart\Services;
 
-use Storephp\Cart\Contracts\IQuote;
-use Storephp\Cart\Exceptions\QuoteNotFoundException;
-use Storephp\Cart\Exceptions\QuoteQuantityLimitException;
-use Storephp\Cart\Models\Cart;
-use Storephp\Cart\Settings\QuoteQuantityLimit;
+use Basketin\Component\Cart\Contracts\IQuote;
+use Basketin\Component\Cart\Exceptions\QuoteNotFoundException;
+use Basketin\Component\Cart\Exceptions\QuoteQuantityLimitException;
+use Basketin\Component\Cart\Models\Cart;
+use Basketin\Component\Cart\Settings\QuoteQuantityLimit;
 
 class QuoteService
 {

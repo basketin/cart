@@ -1,6 +1,6 @@
 <?php
 
-namespace Storephp\Cart\Traits;
+namespace Basketin\Component\Cart\Traits;
 
 trait HasTotal
 {

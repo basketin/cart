@@ -1,9 +1,9 @@
 <?php
 
-namespace Storephp\Cart\Tests\App\Models;
+namespace Basketin\Component\Cart\Tests\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Storephp\Cart\Contracts\ICoupon;
+use Basketin\Component\Cart\Contracts\ICoupon;
 
 class Coupon extends Model implements ICoupon
 {

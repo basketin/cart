@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('storephp_carts', function (Blueprint $table) {
+        Schema::create('basketin_carts', function (Blueprint $table) {
             $table->id();
             $table->ulid('ulid')->unique()->index();
             $table->nullablemorphs('customer');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('storephp_carts');
+        Schema::dropIfExists('basketin_carts');
     }
 };

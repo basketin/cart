@@ -1,11 +1,11 @@
 <?php
 
-namespace Storephp\Cart\Tests\App\Models;
+namespace Basketin\Component\Cart\Tests\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Storephp\Cart\Contracts\IQuote;
-use Storephp\Cart\Traits\HasQuote;
-use Storephp\Cart\Traits\HasTotal;
+use Basketin\Component\Cart\Contracts\IQuote;
+use Basketin\Component\Cart\Traits\HasQuote;
+use Basketin\Component\Cart\Traits\HasTotal;
 
 class Product extends Model implements IQuote
 {

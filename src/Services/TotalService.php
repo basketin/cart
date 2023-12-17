@@ -1,11 +1,11 @@
 <?php
 
-namespace Storephp\Cart\Services;
+namespace Basketin\Component\Cart\Services;
 
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Storephp\Cart\Calculate\CouponCalculate;
-use Storephp\Cart\Traits\HasTotal;
+use Basketin\Component\Cart\Calculate\CouponCalculate;
+use Basketin\Component\Cart\Traits\HasTotal;
 
 class TotalService
 {
@@ -23,7 +23,7 @@ class TotalService
             HasTotal::class,
             array_keys((new \ReflectionClass($quotes->first()->item_type))->getTraits())
         )) {
-            throw new Exception('You must use `Storephp\Cart\Traits\HasTotal` Trait');
+            throw new Exception('You must use `Basketin\Component\Cart\Traits\HasTotal` Trait');
         }
 
         foreach ($quotes as $quote) {

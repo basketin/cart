@@ -1,8 +1,8 @@
 <?php
 
-use Storephp\Cart\Exceptions\CartNotFoundException;
-use Storephp\Cart\Facades\CartManagement;
-use Storephp\Cart\Tests\App\Models\Product;
+use Basketin\Component\Cart\Exceptions\CartNotFoundException;
+use Basketin\Component\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Tests\App\Models\Product;
 
 test('Get Ulid', function () {
     $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');

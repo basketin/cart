@@ -1,6 +1,6 @@
 <?php
 
-namespace Storephp\Cart\Exceptions;
+namespace Basketin\Component\Cart\Exceptions;
 
 use Exception;
 

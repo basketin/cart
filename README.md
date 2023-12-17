@@ -1,11 +1,11 @@
 <p align="center"><a href="#" target="_blank"><img src="./cover.svg"/></a></p>
 
 <p align="center">
-  <a href="https://packagist.org/packages/storephp/cart" target="_blank"><img src="https://img.shields.io/static/v1?label=Packagist&message=storephp/cart&color=blue&logo=packagist&logoColor=white" alt="Source"></a>
-  <a href="https://packagist.org/packages/storephp/cart" target="_blank"><img src="https://poser.pugx.org/storephp/cart/v" alt="Packagist Version"></a>
+  <a href="https://packagist.org/packages/basketin/cart" target="_blank"><img src="https://img.shields.io/static/v1?label=Packagist&message=basketin/cart&color=blue&logo=packagist&logoColor=white" alt="Source"></a>
+  <a href="https://packagist.org/packages/basketin/cart" target="_blank"><img src="https://poser.pugx.org/basketin/cart/v" alt="Packagist Version"></a>
 </p>
 
-# StorePHP Cart
+# Basketin Cart
 
 Cart module for eCommerce system based on Laravel.
 
@@ -14,7 +14,7 @@ Cart module for eCommerce system based on Laravel.
 ### Installation
 
 ```bash
-composer require storephp/cart
+composer require basketin/cart
 ```
 
 Install via composer.
@@ -32,7 +32,7 @@ You need to migrate the package tables.
 ```php
 <?php
 
-use Storephp\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Facades\CartManagement;
 
 $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD'); // <- ULID
 ```
@@ -44,7 +44,7 @@ You can open the cart if it exists or create a new cart if not exist.
 ```php
 <?php
 
-use Storephp\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Facades\CartManagement;
 
 $cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
 ```
@@ -82,9 +82,9 @@ Open the existing cart only
 <?php
 
 ...
-use Storephp\Cart\Contracts\IQuote;
-use Storephp\Cart\Traits\HasQuote;
-use Storephp\Cart\Traits\HasTotal;
+use Basketin\Component\Cart\Contracts\IQuote;
+use Basketin\Component\Cart\Traits\HasQuote;
+use Basketin\Component\Cart\Traits\HasTotal;
 
 class Product extends Model implements IQuote
 {
@@ -110,7 +110,7 @@ class Product extends Model implements IQuote
 <?php
 
 use App\Models\Product;
-use Storephp\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Facades\CartManagement;
 
 $product = Product::first();
 
@@ -124,7 +124,7 @@ $cart->quote()->increaseQuote($product, 5);
 <?php
 
 use App\Models\Product;
-use Storephp\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Facades\CartManagement;
 
 $product = Product::first();
 
@@ -138,7 +138,7 @@ $cart->quote()->decreaseQuote($product, 2);
 <?php
 
 use App\Models\Product;
-use Storephp\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Facades\CartManagement;
 
 $product = Product::first();
 
@@ -152,7 +152,7 @@ $cart->quote()->hasQuote($product);
 <?php
 
 use App\Models\Product;
-use Storephp\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Facades\CartManagement;
 
 $product = Product::first();
 
@@ -165,7 +165,7 @@ $cart->quote()->removeQuote($product);
 ```php
 <?php
 
-use Storephp\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Facades\CartManagement;
 
 $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
 $cart->getCart();
@@ -176,7 +176,7 @@ $cart->getCart();
 ```php
 <?php
 
-use Storephp\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Facades\CartManagement;
 
 $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
 $cart->quote()->getQuotes();
@@ -187,7 +187,7 @@ $cart->quote()->getQuotes();
 ```php
 <?php
 
-use Storephp\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Facades\CartManagement;
 
 $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
 $totals = $cart->totals();
@@ -211,7 +211,7 @@ You need to prepare a coupon model to inject into cart services
 
 ```php
 use Illuminate\Database\Eloquent\Model;
-use Storephp\Cart\Contracts\ICoupon;
+use Basketin\Component\Cart\Contracts\ICoupon;
 
 class Coupon extends Model implements ICoupon
 {

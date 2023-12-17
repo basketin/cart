@@ -1,8 +1,8 @@
 <?php
 
-namespace Storephp\Cart\Services;
+namespace Basketin\Component\Cart\Services;
 
-use Storephp\Cart\Models\Cart;
+use Basketin\Component\Cart\Models\Cart;
 
 class FieldService
 {

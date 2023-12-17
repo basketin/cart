@@ -1,8 +1,8 @@
 <?php
 
-namespace Storephp\Cart\Traits;
+namespace Basketin\Component\Cart\Traits;
 
-use Storephp\Cart\Models\Quote;
+use Basketin\Component\Cart\Models\Quote;
 
 trait HasQuote
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Storephp\Cart\Settings;
+namespace Basketin\Component\Cart\Settings;
 
 class QuoteQuantityLimit
 {
@@ -17,6 +17,6 @@ class QuoteQuantityLimit
             return $limit;
         }
 
-        return config('storephp.cart.limit_quote', 5);
+        return config('basketin.cart.limit_quote', 5);
     }
 }

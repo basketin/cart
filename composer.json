@@ -1,5 +1,5 @@
 {
-    "name": "storephp/cart",
+    "name": "basketin/cart",
     "description": "Cart for eCommerce store",
     "type": "library",
     "license": "MIT",
@@ -11,12 +11,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Storephp\\Cart\\": "src/"
+            "Basketin\\Component\\Cart\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Storephp\\Cart\\Tests\\": "tests/"
+            "Basketin\\Component\\Cart\\Tests\\": "tests/"
         }
     },
     "require": {
@@ -31,7 +31,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Storephp\\Cart\\Providers\\StorePHPCartServiceProvider"
+                "Basketin\\Component\\Cart\\Providers\\BasketinCartServiceProvider"
             ]
         }
     },

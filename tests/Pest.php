@@ -11,7 +11,7 @@
 |
 */
 
-uses(Storephp\Cart\Tests\TestCase::class)->in(__DIR__);
+uses(Basketin\Component\Cart\Tests\TestCase::class)->in(__DIR__);
 
 /*
 |--------------------------------------------------------------------------

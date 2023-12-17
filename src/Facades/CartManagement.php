@@ -1,6 +1,6 @@
 <?php
 
-namespace Storephp\Cart\Facades;
+namespace Basketin\Component\Cart\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -8,6 +8,6 @@ class CartManagement extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'storephp.cart.cartservice';
+        return 'basketin.cart.cartservice';
     }
 }

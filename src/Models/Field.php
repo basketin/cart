@@ -1,6 +1,6 @@
 <?php
 
-namespace Storephp\Cart\Models;
+namespace Basketin\Component\Cart\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ class Field extends Model
      *
      * @var string
      */
-    protected $table = 'storephp_cart_fields';
+    protected $table = 'basketin_cart_fields';
 
     /**
      * The attributes that are mass assignable.

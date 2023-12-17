@@ -1,9 +1,9 @@
 <?php
 
-use Storephp\Cart\Calculate\CouponCalculate;
-use Storephp\Cart\Facades\CartManagement;
-use Storephp\Cart\Tests\App\Models\Coupon;
-use Storephp\Cart\Tests\App\Models\Product;
+use Basketin\Component\Cart\Calculate\CouponCalculate;
+use Basketin\Component\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Tests\App\Models\Coupon;
+use Basketin\Component\Cart\Tests\App\Models\Product;
 
 test('Cart With Fixed Coupon', function () {
     $product = Product::create([

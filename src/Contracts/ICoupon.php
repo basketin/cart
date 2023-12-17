@@ -1,6 +1,6 @@
 <?php
 
-namespace Storephp\Cart\Contracts;
+namespace Basketin\Component\Cart\Contracts;
 
 interface ICoupon
 {

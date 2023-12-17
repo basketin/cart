@@ -1,11 +1,11 @@
 <?php
 
-namespace Storephp\Cart\Providers;
+namespace Basketin\Component\Cart\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Storephp\Cart\Services\CartService;
+use Basketin\Component\Cart\Services\CartService;
 
-class StorePHPCartServiceProvider extends ServiceProvider
+class BasketinCartServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -14,11 +14,11 @@ class StorePHPCartServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('storephp.cart.cartservice', CartService::class);
+        $this->app->singleton('basketin.cart.cartservice', CartService::class);
 
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/cart.php',
-            'storephp.cart'
+            'basketin.cart'
         );
     }
 
@@ -31,7 +31,7 @@ class StorePHPCartServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../../config/cart.php' => config_path('storephp/cart.php'),
+                __DIR__ . '/../../config/cart.php' => config_path('basketin/cart.php'),
             ]);
 
             $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');

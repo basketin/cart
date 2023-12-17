@@ -1,8 +1,8 @@
 <?php
 
-namespace Storephp\Cart\Repositories;
+namespace Basketin\Component\Cart\Repositories;
 
-use Storephp\Cart\Models\Cart;
+use Basketin\Component\Cart\Models\Cart;
 
 class CartRepository
 {

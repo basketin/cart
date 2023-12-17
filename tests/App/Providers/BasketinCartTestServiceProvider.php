@@ -1,10 +1,10 @@
 <?php
 
-namespace Storephp\Cart\Tests\App\Providers;
+namespace Basketin\Component\Cart\Tests\App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class StorePHPCartTestServiceProvider extends ServiceProvider
+class BasketinCartTestServiceProvider extends ServiceProvider
 {
     /**
      * Register services.

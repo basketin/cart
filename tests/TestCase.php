@@ -1,10 +1,10 @@
 <?php
 
-namespace Storephp\Cart\Tests;
+namespace Basketin\Component\Cart\Tests;
 
+use Basketin\Component\Cart\Providers\BasketinCartServiceProvider;
+use Basketin\Component\Cart\Tests\App\Providers\BasketinCartTestServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Storephp\Cart\Providers\StorePHPCartServiceProvider;
-use Storephp\Cart\Tests\App\Providers\StorePHPCartTestServiceProvider;
 
 
 class TestCase extends BaseTestCase
@@ -23,8 +23,8 @@ class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
-            StorePHPCartServiceProvider::class,
-            StorePHPCartTestServiceProvider::class,
+            BasketinCartServiceProvider::class,
+            BasketinCartTestServiceProvider::class,
         ];
     }
 

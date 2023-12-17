@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('storephp_cart_quotes', function (Blueprint $table) {
+        Schema::create('basketin_cart_quotes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cart_id')->constrained('storephp_carts')->cascadeOnDelete();
+            $table->foreignId('cart_id')->constrained('basketin_carts')->cascadeOnDelete();
             $table->morphs('item');
             $table->unsignedInteger('quantity')->default(1);
             $table->timestamps();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('storephp_cart_quotes');
+        Schema::dropIfExists('basketin_cart_quotes');
     }
 };
