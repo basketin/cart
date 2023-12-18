@@ -37,5 +37,6 @@ class TestCase extends BaseTestCase
             'database' => ':memory:',
             'prefix' => '',
         ]);
+        $app['config']->set('basketin.cart.setup.auto_migrate', true);
     }
 }

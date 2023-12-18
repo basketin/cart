@@ -13,17 +13,25 @@ Cart module for eCommerce system based on Laravel.
 
 ### Installation
 
+Install via composer.
+
 ```bash
 composer require basketin/cart
 ```
 
-Install via composer.
+You need to migrate the package tables.
 
 ```bash
-php artisan migrate
+php artisan migrate --path=/vendor/basketin/cart/database/migrations
 ```
 
-You need to migrate the package tables.
+If you need to auth migrate without set path you can set `true` to `basketin.cart.setup.auto_migrate` at config.
+
+### Publish config
+
+```bash
+php artisan vendor:publish --tag=basketin-cart-config
+```
 
 ### How to use
 

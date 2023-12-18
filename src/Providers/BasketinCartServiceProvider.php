@@ -32,9 +32,11 @@ class BasketinCartServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../../config/cart.php' => config_path('basketin/cart.php'),
-            ]);
+            ], ['basketin-cart-config']);
 
-            $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+            if (config('basketin.cart.setup.auto_migrate')) {
+                $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+            }
         }
     }
 }
