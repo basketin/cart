@@ -99,4 +99,16 @@ class CartService
     {
         return new TotalService($this->cart->quotes, $this->coupon);
     }
+
+    public function checkoutIt()
+    {
+        $updated = $this->getCart()->update([
+            'status' => 'checkout'
+        ]);
+
+        if ($updated) {
+            session()->forget(self::SESSION_KEY);
+            return true;
+        }
+    }
 }

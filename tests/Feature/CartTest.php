@@ -69,7 +69,6 @@ test('Count Products', function () {
         'name' => 'xBox',
         'sku' => 12345,
         'price' => 599,
-
     ]);
 
     $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
@@ -84,7 +83,6 @@ test('Count Items', function () {
         'name' => 'xBox',
         'sku' => 12345,
         'price' => 599,
-
     ]);
 
     $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
@@ -94,4 +92,20 @@ test('Count Items', function () {
     $cart->quote()->addQuote($product, 1);
 
     expect($cart->getCountItems())->toEqual(3);
+});
+
+test('Cart Checkout', function () {
+    $product = Product::create([
+        'name' => 'xBox',
+        'sku' => 12345,
+        'price' => 599,
+    ]);
+
+    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+
+    $cart->quote()->addQuote($product, 1);
+    $cart->quote()->addQuote($product, 1);
+    $cart->quote()->addQuote($product, 1);
+
+    expect($cart->checkoutIt())->toBeTrue();
 });
