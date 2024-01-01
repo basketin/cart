@@ -11,6 +11,8 @@ use Basketin\Component\Cart\Services\FieldService;
 
 class CartService
 {
+    const SESSION_KEY = 'basketin_cart_ulid';
+
     private $coupon = null;
 
     public function __construct(
@@ -22,7 +24,7 @@ class CartService
 
     public function initCart($ulid = null, $currency = 'USD')
     {
-        $ulid = $ulid ?? (string) Str::ulid();
+        $ulid = $ulid ?? session(self::SESSION_KEY, null) ?? (string) Str::ulid();
 
         if (!$cart = $this->cartRepository->getCartByUlid($ulid)) {
             $cart = $this->cartRepository->createNewCart($ulid, $currency);
@@ -30,13 +32,15 @@ class CartService
 
         $this->cart = $cart;
 
-        return $this;
+        session([self::SESSION_KEY => $this->getUlid()]);
 
-        // return new QuoteService($cart);
+        return $this;
     }
 
-    public function openCart($ulid)
+    public function openCart($ulid = null)
     {
+        $ulid = $ulid ?? session(self::SESSION_KEY, null);
+
         if (!$cart = $this->cartRepository->getCartByUlid($ulid)) {
             throw new CartNotFoundException();
         }
@@ -44,8 +48,6 @@ class CartService
         $this->cart = $cart;
 
         return $this;
-
-        // return new QuoteService($cart);
     }
 
     public function getUlid()

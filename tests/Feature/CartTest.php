@@ -2,6 +2,7 @@
 
 use Basketin\Component\Cart\Exceptions\CartNotFoundException;
 use Basketin\Component\Cart\Facades\CartManagement;
+use Basketin\Component\Cart\Services\CartService;
 use Basketin\Component\Cart\Tests\App\Models\Product;
 
 test('Get Ulid', function () {
@@ -23,6 +24,11 @@ test('Get Cart', function () {
     ]);
 });
 
+test('Check Session Cart', function () {
+    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    expect($cart->getUlid())->toEqual(session(CartService::SESSION_KEY));
+});
+
 test('Open Cart', function () {
     CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
 
@@ -32,6 +38,25 @@ test('Open Cart', function () {
         'ulid' => '01HF7V7N1MG9SDFPQYWXDNHR9Q',
         'currency' => 'USD',
     ]);
+});
+
+test('Open Cart By Session', function () {
+    CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+
+    $cart = CartManagement::openCart();
+
+    expect($cart->getCart()->toArray())->toMatchArray([
+        'ulid' => '01HF7V7N1MG9SDFPQYWXDNHR9Q',
+        'currency' => 'USD',
+    ]);
+});
+
+test('Init And Open Cart By Session', function () {
+    CartManagement::initCart();
+
+    $cart = CartManagement::openCart();
+
+    expect($cart->getUlid())->toEqual(session(CartService::SESSION_KEY));
 });
 
 test('Open Cart - CartNotFound', function () {
