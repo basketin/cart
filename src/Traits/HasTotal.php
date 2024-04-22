@@ -4,7 +4,7 @@ namespace Basketin\Component\Cart\Traits;
 
 trait HasTotal
 {
-    abstract public function getPriceAttribute(): float;
+    abstract public function getOriginalPriceAttribute(): float;
 
     abstract public function getSpecialPriceAttribute(): float|null;
 
@@ -14,11 +14,11 @@ trait HasTotal
             return (float) 0;
         }
 
-        return (float) $this->price - $this->special_price;
+        return (float) $this->original_price - $this->special_price;
     }
 
     public function getFinalPriceAttribute(): float
     {
-        return (float) ($this->special_price ?? $this->price);
+        return (float) ($this->special_price ?? $this->original_price);
     }
 }

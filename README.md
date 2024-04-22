@@ -100,7 +100,7 @@ class Product extends Model implements IQuote
     use HasQuote;
     use HasTotal;
 
-    public function getPriceAttribute(): float
+    public function getOriginalPriceAttribute(): float
     {
         return (float) $this->price;
     }
