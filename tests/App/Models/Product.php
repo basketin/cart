@@ -18,7 +18,7 @@ class Product extends Model implements IQuote
         'price',
     ];
 
-    public function getPriceAttribute(): float
+    public function getOriginalPriceAttribute(): float
     {
         return (float) $this->getAttributes()['price'];
     }
