@@ -5,7 +5,6 @@ namespace Basketin\Component\Cart\Services;
 use Illuminate\Support\Str;
 use Basketin\Component\Cart\Contracts\ICoupon;
 use Basketin\Component\Cart\Exceptions\CartNotFoundException;
-use Basketin\Component\Cart\Models\Cart;
 use Basketin\Component\Cart\Repositories\CartRepository;
 use Basketin\Component\Cart\Services\FieldService;
 
@@ -14,12 +13,11 @@ class CartService
     const SESSION_KEY = 'basketin_cart_ulid';
 
     private $coupon = null;
+    private $currentCart = null;
 
     public function __construct(
         private CartRepository $cartRepository,
-        private Cart $cart
     ) {
-        $this->fields = $cart->fields;
     }
 
     public function initCart($ulid = null, $currency = 'USD')
@@ -30,7 +28,7 @@ class CartService
             $cart = $this->cartRepository->createNewCart($ulid, $currency);
         }
 
-        $this->cart = $cart;
+        $this->currentCart = $cart;
 
         session([self::SESSION_KEY => $this->getUlid()]);
 
@@ -45,44 +43,44 @@ class CartService
             throw new CartNotFoundException();
         }
 
-        $this->cart = $cart;
+        $this->currentCart = $cart;
 
         return $this;
     }
 
     public function getUlid()
     {
-        return $this->cart->ulid;
+        return $this->currentCart->ulid;
     }
 
     public function getCurrency()
     {
-        return $this->cart->currency;
+        return $this->currentCart->currency;
     }
 
     public function getCart()
     {
-        return $this->cart;
+        return $this->currentCart;
     }
 
     public function getCountProducts()
     {
-        return $this->cart->quotes()->count();
+        return $this->currentCart->quotes()->count();
     }
 
     public function getCountItems()
     {
-        return $this->cart->quotes()->sum('quantity');
+        return $this->currentCart->quotes()->sum('quantity');
     }
 
     public function quote()
     {
-        return new QuoteService($this->cart);
+        return new QuoteService($this->currentCart);
     }
 
     public function fields()
     {
-        return new FieldService($this->cart);
+        return new FieldService($this->currentCart);
     }
 
     public function coupon(ICoupon $coupon)
@@ -97,7 +95,7 @@ class CartService
 
     public function totals()
     {
-        return new TotalService($this->cart->quotes, $this->coupon);
+        return new TotalService($this->currentCart->quotes, $this->coupon);
     }
 
     public function checkoutIt()

@@ -77,18 +77,8 @@ class QuoteService
         return $this;
     }
 
-    // public function getCart()
-    // {
-    //     return $this->cart;
-    // }
-
     public function getQuotes()
     {
         return $this->cart->quotes;
     }
-
-    // public function getTotals()
-    // {
-    //     return new TotalService($this->cart->quotes);
-    // }
 }
