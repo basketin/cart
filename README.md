@@ -112,6 +112,20 @@ class Product extends Model implements IQuote
 }
 ```
 
+#### Add Quote
+
+```php
+<?php
+
+use App\Models\Product;
+use Basketin\Component\Cart\Facades\CartManagement;
+
+$product = Product::first();
+
+$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
+$cart->quote()->addQuote($product, 1);
+```
+
 #### Increase Quote
 
 ```php
@@ -252,6 +266,8 @@ To apply coupon code on cart:-
 $coupon = Coupon::first();
 $cart->coupon($coupon);
 ```
+
+> And you can use `$this->couponInfo()` to get coupon info
 
 ### Fields
 
