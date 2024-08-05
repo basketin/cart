@@ -18,7 +18,7 @@ class CouponCalculate
     public function setSubTotal($amount)
     {
         if ($this->coupon->discountType() === static::FIXED) {
-            $this->subTotal = $amount - $this->coupon->discountValue();
+            $this->subTotal = $this->coupon->discountValue();
         }
 
         if ($this->coupon->discountType() === static::PERCENT) {

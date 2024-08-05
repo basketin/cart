@@ -27,7 +27,7 @@ test('Cart With Fixed Coupon', function () {
 
     $totals = $cart->totals();
 
-    expect($totals->getSubTotal())->toEqual(550);
+    expect($totals->getGrandTotal())->toEqual(550);
 });
 
 
@@ -53,7 +53,7 @@ test('Cart With Percent Coupon', function () {
 
     $totals = $cart->totals();
 
-    expect($totals->getSubTotal())->toEqual(299.5);
+    expect($totals->getGrandTotal())->toEqual(299.5);
 });
 
 test('Coupon Info', function () {

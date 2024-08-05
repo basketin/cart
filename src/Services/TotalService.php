@@ -11,7 +11,6 @@ class TotalService
 {
     private $subTotal = 0;
     private $discountTotal = 0;
-    private $grandTotal = 0;
 
     private $globalDiscountTotal = null;
 
@@ -27,9 +26,8 @@ class TotalService
         }
 
         foreach ($quotes as $quote) {
-            $this->subTotal += $quote->quantity * $quote->item->price;
+            $this->subTotal += $quote->quantity * $quote->item->original_price;
             $this->discountTotal += $quote->quantity * $quote->item->discount_price;
-            $this->grandTotal += $quote->quantity * $quote->item->final_price;
         }
     }
 
@@ -47,26 +45,31 @@ class TotalService
 
     public function getSubTotal(): float
     {
-        if ($this->coupon) {
-            return (float) (new CouponCalculate($this->coupon))
-                ->setSubTotal($this->subTotal)
-                ->getSubTotal();
-        }
-
         return (float) $this->subTotal;
     }
 
     public function getDiscountTotal(): float
     {
-        return (float) $this->discountTotal;
+        $deductions = 0;
+
+        if ($this->coupon) {
+            $deductions += (float) (new CouponCalculate($this->coupon))
+                ->setSubTotal($this->subTotal)
+                ->getSubTotal();
+        }
+
+        if ($globalDiscountTotal = $this->getGlobalDiscountTotal()) {
+            $deductions += $globalDiscountTotal;
+        }
+
+        if ($deductions >= $this->getSubTotal())
+            return $this->getSubTotal();
+
+        return (float) $this->discountTotal + $deductions;
     }
 
     public function getGrandTotal(): float
     {
-        if ($globalDiscountTotal = $this->getGlobalDiscountTotal()) {
-            return (float) $this->grandTotal - $globalDiscountTotal;
-        }
-
-        return (float) $this->grandTotal;
+        return (float) $this->getSubTotal() - $this->getDiscountTotal();
     }
 }
