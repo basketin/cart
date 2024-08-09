@@ -18,16 +18,18 @@ class TotalService
         private Collection $quotes,
         private $coupon = null,
     ) {
-        if (!in_array(
-            HasTotal::class,
-            array_keys((new \ReflectionClass($quotes->first()->item_type))->getTraits())
-        )) {
-            throw new Exception('You must use `Basketin\Component\Cart\Traits\HasTotal` Trait');
-        }
+        if ($quotes->isNotEmpty()) {
+            if (!in_array(
+                HasTotal::class,
+                array_keys((new \ReflectionClass($quotes->first()->item_type))->getTraits())
+            )) {
+                throw new Exception('You must use `Basketin\Component\Cart\Traits\HasTotal` Trait');
+            }
 
-        foreach ($quotes as $quote) {
-            $this->subTotal += $quote->quantity * $quote->item->original_price;
-            $this->discountTotal += $quote->quantity * $quote->item->discount_price;
+            foreach ($quotes as $quote) {
+                $this->subTotal += $quote->quantity * $quote->item->original_price;
+                $this->discountTotal += $quote->quantity * $quote->item->discount_price;
+            }
         }
     }
 
