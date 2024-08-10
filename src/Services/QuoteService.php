@@ -12,8 +12,7 @@ class QuoteService
 {
     public function __construct(
         private Cart $cart
-    ) {
-    }
+    ) {}
 
     public function addQuote(IQuote $item, $quantity = 1)
     {
@@ -63,7 +62,7 @@ class QuoteService
 
     public function hasQuote(IQuote $item)
     {
-        return $item->quote()->exists();
+        return $item->quote()->where('cart_id', $this->cart->id)->exists();
     }
 
     public function removeQuote(IQuote $item)
