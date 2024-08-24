@@ -42,4 +42,9 @@ class Cart extends Model
     {
         return $this->hasMany(Field::class, 'cart_id', 'id');
     }
+
+    public function order()
+    {
+        return $this->hasOne(Order::class, 'cart_id', 'id');
+    }
 }

@@ -17,8 +17,7 @@ class CartService
 
     public function __construct(
         private CartRepository $cartRepository,
-    ) {
-    }
+    ) {}
 
     public function initCart($ulid = null, $currency = 'USD')
     {
@@ -96,6 +95,22 @@ class CartService
     public function totals()
     {
         return new TotalService($this->currentCart->quotes, $this->coupon);
+    }
+
+    public function preparingOrder()
+    {
+        if (!$order = $this->currentCart->order()->first())
+            $order = $this->currentCart->order()->create();
+
+        $this->fields()->set('order_reference', $order->reference);
+
+        return $order;
+    }
+
+    public function syncOrder($order)
+    {
+        $preparingOrder = $this->preparingOrder();
+        $order->cartOrder()->save($preparingOrder);
     }
 
     public function checkoutIt()
