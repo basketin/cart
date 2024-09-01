@@ -3,7 +3,7 @@
 use Basketin\Component\Cart\Facades\CartManagement;
 use Basketin\Component\Cart\Tests\App\Models\Product;
 
-test('Get Subtotal', function () {
+test('Get Item Final Total', function () {
     $product = Product::create([
         'name' => 'xBox',
         'sku' => 12345,
@@ -16,7 +16,7 @@ test('Get Subtotal', function () {
 
     $totals = $cart->totals();
 
-    expect($totals->getSubTotal())->toEqual(599);
+    expect($totals->getItemFinalTotal())->toEqual(599);
 });
 
 test('Get Discount Total', function () {

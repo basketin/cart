@@ -16,6 +16,7 @@ class Product extends Model implements IQuote
         'name',
         'sku',
         'price',
+        'special_price',
     ];
 
     public function getOriginalPriceAttribute(): float
@@ -25,6 +26,6 @@ class Product extends Model implements IQuote
 
     public function getSpecialPriceAttribute(): float|null
     {
-        return null;
+        return ($this->getAttributes()['special_price']) ? (float) $this->getAttributes()['special_price'] : null;
     }
 }

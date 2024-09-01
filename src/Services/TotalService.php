@@ -9,9 +9,9 @@ use Basketin\Component\Cart\Traits\HasTotal;
 
 class TotalService
 {
-    private $subTotal = 0;
-    private $discountTotal = 0;
-
+    private $itemFinalTotal = 0;
+    private $itemDiscountTotal = 0;
+    private $deductions = 0;
     private $globalDiscountTotal = null;
 
     public function __construct(
@@ -27,8 +27,8 @@ class TotalService
             }
 
             foreach ($quotes as $quote) {
-                $this->subTotal += $quote->quantity * $quote->item->original_price;
-                $this->discountTotal += $quote->quantity * $quote->item->discount_price;
+                $this->itemFinalTotal += $quote->quantity * $quote->item->final_price;
+                $this->itemDiscountTotal += $quote->quantity * $quote->item->discount_price;
             }
         }
     }
@@ -45,29 +45,37 @@ class TotalService
         return $this;
     }
 
-    public function getSubTotal(): float
+    public function getItemFinalTotal(): float
     {
-        return (float) $this->subTotal;
+        return (float) $this->itemFinalTotal;
+    }
+
+    public function getItemDiscountTotal(): float
+    {
+        return (float) $this->itemDiscountTotal;
+    }
+
+    public function getSubTotal()
+    {
+        return (float) $this->getItemFinalTotal();
     }
 
     public function getDiscountTotal(): float
     {
-        $deductions = 0;
-
         if ($this->coupon) {
-            $deductions += (float) (new CouponCalculate($this->coupon))
-                ->setSubTotal($this->subTotal)
+            $this->deductions += (float) (new CouponCalculate($this->coupon))
+                ->setSubTotal($this->getSubTotal())
                 ->getSubTotal();
         }
 
         if ($globalDiscountTotal = $this->getGlobalDiscountTotal()) {
-            $deductions += $globalDiscountTotal;
+            $this->deductions += $globalDiscountTotal;
         }
 
-        if ($deductions >= $this->getSubTotal())
+        if ($this->deductions >= $this->getSubTotal())
             return $this->getSubTotal();
 
-        return (float) $this->discountTotal + $deductions;
+        return (float) $this->deductions;
     }
 
     public function getGrandTotal(): float

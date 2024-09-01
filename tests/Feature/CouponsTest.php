@@ -56,6 +56,31 @@ test('Cart With Percent Coupon', function () {
     expect($totals->getGrandTotal())->toEqual(299.5);
 });
 
+test('Cart With Percent Coupon As a Special', function () {
+    $product = Product::create([
+        'name' => 'xBox',
+        'sku' => 12345,
+        'price' => 599,
+        'special_price' => 499,
+    ]);
+
+    $coupon = Coupon::create([
+        'coupon_name' => 'xCode',
+        'coupon_code' => 'xcode',
+        'discount_type' => CouponCalculate::PERCENT,
+        'discount_value' => 50,
+    ]);
+
+    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart->quote()->addQuote($product, 1);
+
+    $cart->coupon($coupon);
+
+    $totals = $cart->totals();
+
+    expect($totals->getGrandTotal())->toEqual(249.5);
+});
+
 test('Coupon Info', function () {
     $product = Product::create([
         'name' => 'xBox',
@@ -99,5 +124,5 @@ test('Cart Without Coupon', function () {
 
     $totals = $cart->totals();
 
-    expect($totals->getSubTotal())->toEqual(599);
+    expect($totals->getGrandTotal())->toEqual(599);
 });
