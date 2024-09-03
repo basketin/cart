@@ -1,8 +1,10 @@
 <?php
 
+use Basketin\Component\Cart\Calculate\CouponCalculate;
 use Basketin\Component\Cart\Exceptions\CartNotFoundException;
 use Basketin\Component\Cart\Facades\CartManagement;
 use Basketin\Component\Cart\Services\CartService;
+use Basketin\Component\Cart\Tests\App\Models\Coupon;
 use Basketin\Component\Cart\Tests\App\Models\Product;
 
 test('Get Ulid', function () {
@@ -92,6 +94,63 @@ test('Count Items', function () {
     $cart->quote()->addQuote($product, 1);
 
     expect($cart->getCountItems())->toEqual(3);
+});
+
+test('Show Cart', function () {
+    $product = Product::create([
+        'name' => 'xBox',
+        'sku' => 12345,
+        'price' => 599,
+    ]);
+
+    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+
+    $cart->quote()->addQuote($product, 1);
+
+    $totals = $cart->totals();
+
+    expect([
+        'subtotal' => $totals->getSubTotal(),
+        'discounttotal' => $totals->getDiscountTotal(),
+        'grandtotal' => $totals->getGrandTotal(),
+    ])->toMatchArray([
+        'subtotal' => 599,
+        'discounttotal' => 0,
+        'grandtotal' => 599,
+    ]);
+});
+
+test('Show Cart With Discount', function () {
+    $product = Product::create([
+        'name' => 'xBox',
+        'sku' => 12345,
+        'price' => 599,
+    ]);
+
+    $coupon = Coupon::create([
+        'coupon_name' => 'xCode',
+        'coupon_code' => 'xcode',
+        'discount_type' => CouponCalculate::PERCENT,
+        'discount_value' => 50,
+    ]);
+
+    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+
+    $cart->quote()->addQuote($product, 1);
+
+    $cart->coupon($coupon);
+
+    $totals = $cart->totals();
+
+    expect([
+        'subtotal' => $totals->getSubTotal(),
+        'discounttotal' => $totals->getDiscountTotal(),
+        'grandtotal' => $totals->getGrandTotal(),
+    ])->toMatchArray([
+        'subtotal' => 599,
+        'discounttotal' => 299.5,
+        'grandtotal' => 299.5,
+    ]);
 });
 
 test('Cart Checkout', function () {

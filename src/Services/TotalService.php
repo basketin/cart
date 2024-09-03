@@ -11,7 +11,6 @@ class TotalService
 {
     private $itemFinalTotal = 0;
     private $itemDiscountTotal = 0;
-    private $deductions = 0;
     private $globalDiscountTotal = null;
 
     public function __construct(
@@ -62,20 +61,22 @@ class TotalService
 
     public function getDiscountTotal(): float
     {
+        $deductions = 0;
+
         if ($this->coupon) {
-            $this->deductions += (float) (new CouponCalculate($this->coupon))
+            $deductions += (float) (new CouponCalculate($this->coupon))
                 ->setSubTotal($this->getSubTotal())
                 ->getSubTotal();
         }
 
         if ($globalDiscountTotal = $this->getGlobalDiscountTotal()) {
-            $this->deductions += $globalDiscountTotal;
+            $deductions += $globalDiscountTotal;
         }
 
-        if ($this->deductions >= $this->getSubTotal())
+        if ($deductions >= $this->getSubTotal())
             return $this->getSubTotal();
 
-        return (float) $this->deductions;
+        return (float) $deductions;
     }
 
     public function getGrandTotal(): float
