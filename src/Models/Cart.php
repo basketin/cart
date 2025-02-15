@@ -20,6 +20,7 @@ class Cart extends Model
      */
     protected $fillable = [
         'ulid',
+        'cart_type',
         'currency',
         'status',
     ];

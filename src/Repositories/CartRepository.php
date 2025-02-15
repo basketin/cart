@@ -6,10 +6,11 @@ use Basketin\Component\Cart\Models\Cart;
 
 class CartRepository
 {
-    public function createNewCart($ulid = null, $currency = 'USD')
+    public function createNewCart($ulid = null, $currency = 'USD', $cartType = null)
     {
         return Cart::create([
             'ulid' => $ulid,
+            'cart_type' => $cartType,
             'currency' => $currency,
         ]);
     }

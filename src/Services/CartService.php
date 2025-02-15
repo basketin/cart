@@ -2,11 +2,12 @@
 
 namespace Basketin\Component\Cart\Services;
 
-use Illuminate\Support\Str;
+use Basketin\Component\Cart\Cart;
 use Basketin\Component\Cart\Contracts\ICoupon;
 use Basketin\Component\Cart\Exceptions\CartNotFoundException;
 use Basketin\Component\Cart\Repositories\CartRepository;
 use Basketin\Component\Cart\Services\FieldService;
+use Illuminate\Support\Str;
 
 class CartService
 {
@@ -19,30 +20,34 @@ class CartService
         private CartRepository $cartRepository,
     ) {}
 
-    public function initCart($ulid = null, $currency = 'USD')
+    public function initCart($ulid = null, $currency = 'USD', $cartType = null)
     {
-        $ulid = $ulid ?? session(self::SESSION_KEY, null) ?? (string) Str::ulid();
+        $ulid = $ulid ?? session($cartType . '_' . self::SESSION_KEY, null) ?? (string) Str::ulid();
 
         if (!$cart = $this->cartRepository->getCartByUlid($ulid)) {
-            $cart = $this->cartRepository->createNewCart($ulid, $currency);
+            $cart = $this->cartRepository->createNewCart($ulid, $currency, $cartType);
         }
 
         $this->currentCart = $cart;
 
-        session([self::SESSION_KEY => $this->getUlid()]);
+        session([$cartType . '_' . self::SESSION_KEY => $this->getUlid()]);
+
+        Cart::setCart($this);
 
         return $this;
     }
 
-    public function openCart($ulid = null)
+    public function openCart($ulid = null, $cartType = null)
     {
-        $ulid = $ulid ?? session(self::SESSION_KEY, null);
+        $ulid = $ulid ?? session($cartType . '_' . self::SESSION_KEY, null);
 
         if (!$cart = $this->cartRepository->getCartByUlid($ulid)) {
             throw new CartNotFoundException();
         }
 
         $this->currentCart = $cart;
+
+        Cart::setCart($this);
 
         return $this;
     }
@@ -55,6 +60,11 @@ class CartService
     public function getCurrency()
     {
         return $this->currentCart->currency;
+    }
+
+    public function getType()
+    {
+        return $this->currentCart->cart_type;
     }
 
     public function getCart()
@@ -113,14 +123,14 @@ class CartService
         $order->cartOrder()->save($preparingOrder);
     }
 
-    public function checkoutIt()
+    public function checkoutIt($cartType = null)
     {
         $updated = $this->getCart()->update([
             'status' => 'checkout'
         ]);
 
         if ($updated) {
-            session()->forget(self::SESSION_KEY);
+            session()->forget($cartType . '_' . self::SESSION_KEY);
             return true;
         }
     }

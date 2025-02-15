@@ -17,6 +17,12 @@ test('Get Currency', function () {
     expect($cart->getCurrency())->toEqual('USD');
 });
 
+test('Get Type', function () {
+    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD', 'order');
+    
+    expect($cart->getType())->toEqual('order');
+});
+
 test('Get Cart', function () {
     $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
 
