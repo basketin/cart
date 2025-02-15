@@ -42,7 +42,7 @@ php artisan vendor:publish --tag=basketin-cart-config
 
 use Basketin\Component\Cart\Facades\CartManagement;
 
-$cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD'); // <- ULID
+$cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD', 'ORDER'); // <- ULID
 ```
 
 You can open the cart if it exists or create a new cart if not exist.
@@ -54,7 +54,7 @@ You can open the cart if it exists or create a new cart if not exist.
 
 use Basketin\Component\Cart\Facades\CartManagement;
 
-$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
+$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'ORDER'); // <- ULID
 ```
 
 #### Get Ulid
@@ -67,6 +67,12 @@ $cart->getUlid();
 
 ```php
 $cart->getCurrency();
+```
+
+#### Get Type
+
+```php
+$cart->getType();
 ```
 
 #### Get Count Products
