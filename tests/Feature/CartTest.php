@@ -19,7 +19,7 @@ test('Get Currency', function () {
 
 test('Get Type', function () {
     $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD', 'order');
-    
+
     expect($cart->getType())->toEqual('order');
 });
 
@@ -34,7 +34,7 @@ test('Get Cart', function () {
 
 test('Check Session Cart', function () {
     $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
-    expect($cart->getUlid())->toEqual(session(CartService::SESSION_KEY));
+    expect($cart->getUlid())->toEqual(session('_' . CartService::SESSION_KEY));
 });
 
 test('Open Cart', function () {
@@ -64,7 +64,7 @@ test('Init And Open Cart By Session', function () {
 
     $cart = CartManagement::openCart();
 
-    expect($cart->getUlid())->toEqual(session(CartService::SESSION_KEY));
+    expect($cart->getUlid())->toEqual(session('_' . CartService::SESSION_KEY));
 });
 
 test('Open Cart - CartNotFound', function () {
