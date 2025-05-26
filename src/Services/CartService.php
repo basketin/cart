@@ -35,7 +35,7 @@ class CartService
 
         Cart::setCart($this);
 
-        BasketinCreateCartEvent::dispatch($this);
+        BasketinCreateCartEvent::dispatch($this->getUlid());
 
         return $this;
     }

@@ -31,7 +31,7 @@ class QuoteService
             'quantity' => $quantity,
         ]);
 
-        BasketinAddedQuoteEvent::dispatch($this->cartService, $item, $quantity);
+        BasketinAddedQuoteEvent::dispatch($this->cartService->getUlid(), $item, $quantity);
 
         return $this;
     }
@@ -48,7 +48,7 @@ class QuoteService
 
         $_item->increment('quantity', $quantity);
 
-        BasketinIncreaseQuoteEvent::dispatch($this->cartService, $item, $quantity);
+        BasketinIncreaseQuoteEvent::dispatch($this->cartService->getUlid(), $item, $quantity);
 
         return $this;
     }
@@ -66,7 +66,7 @@ class QuoteService
 
         $_item->decrement('quantity', $quantity);
 
-        BasketinDecreaseQuoteEvent::dispatch($this->cartService, $item, $quantity);
+        BasketinDecreaseQuoteEvent::dispatch($this->cartService->getUlid(), $item, $quantity);
 
         return $this;
     }
@@ -84,7 +84,7 @@ class QuoteService
 
         $_item->delete();
 
-        BasketinRemoveQuoteEvent::dispatch($this->cartService, $item);
+        BasketinRemoveQuoteEvent::dispatch($this->cartService->getUlid(), $item);
 
         return $this;
     }

@@ -18,7 +18,7 @@ class BasketinCreateCartEvent
      * Create a new event instance.
      */
     public function __construct(
-        public $cart, // Assuming $cart is an instance of the Cart model or similar
+        public $cartUlid, // Assuming $cart is an instance of the Cart model or similar
     ) {
         //
     }
