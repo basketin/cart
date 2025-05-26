@@ -4,6 +4,7 @@ namespace Basketin\Component\Cart\Services;
 
 use Basketin\Component\Cart\Cart;
 use Basketin\Component\Cart\Contracts\ICoupon;
+use Basketin\Component\Cart\Events\BasketinCreateCartEvent;
 use Basketin\Component\Cart\Exceptions\CartNotFoundException;
 use Basketin\Component\Cart\Repositories\CartRepository;
 use Basketin\Component\Cart\Services\FieldService;
@@ -33,6 +34,8 @@ class CartService
         session([$cartType . '_' . self::SESSION_KEY => $this->getUlid()]);
 
         Cart::setCart($this);
+
+        BasketinCreateCartEvent::dispatch($this);
 
         return $this;
     }
@@ -84,7 +87,7 @@ class CartService
 
     public function quote()
     {
-        return new QuoteService($this->currentCart);
+        return new QuoteService($this, $this->currentCart);
     }
 
     public function fields()

@@ -3,6 +3,10 @@
 namespace Basketin\Component\Cart\Services;
 
 use Basketin\Component\Cart\Contracts\IQuote;
+use Basketin\Component\Cart\Events\BasketinAddedQuoteEvent;
+use Basketin\Component\Cart\Events\BasketinDecreaseQuoteEvent;
+use Basketin\Component\Cart\Events\BasketinIncreaseQuoteEvent;
+use Basketin\Component\Cart\Events\BasketinRemoveQuoteEvent;
 use Basketin\Component\Cart\Exceptions\QuoteNotFoundException;
 use Basketin\Component\Cart\Exceptions\QuoteQuantityLimitException;
 use Basketin\Component\Cart\Models\Cart;
@@ -11,6 +15,7 @@ use Basketin\Component\Cart\Settings\QuoteQuantityLimit;
 class QuoteService
 {
     public function __construct(
+        private CartService $cartService,
         private Cart $cart
     ) {}
 
@@ -26,6 +31,8 @@ class QuoteService
             'quantity' => $quantity,
         ]);
 
+        BasketinAddedQuoteEvent::dispatch($this->cartService, $item, $quantity);
+
         return $this;
     }
 
@@ -40,6 +47,8 @@ class QuoteService
         }
 
         $_item->increment('quantity', $quantity);
+
+        BasketinIncreaseQuoteEvent::dispatch($this->cartService, $item, $quantity);
 
         return $this;
     }
@@ -57,6 +66,8 @@ class QuoteService
 
         $_item->decrement('quantity', $quantity);
 
+        BasketinDecreaseQuoteEvent::dispatch($this->cartService, $item, $quantity);
+
         return $this;
     }
 
@@ -72,6 +83,8 @@ class QuoteService
         }
 
         $_item->delete();
+
+        BasketinRemoveQuoteEvent::dispatch($this->cartService, $item);
 
         return $this;
     }
