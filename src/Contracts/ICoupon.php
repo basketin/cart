@@ -1,6 +1,6 @@
 <?php
 
-namespace Basketin\Component\Cart\Contracts;
+namespace Obelaw\Basketin\Cart\Contracts;
 
 interface ICoupon
 {

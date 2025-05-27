@@ -1,6 +1,6 @@
 <?php
 
-namespace Basketin\Component\Cart\Models;
+namespace Obelaw\Basketin\Cart\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;

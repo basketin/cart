@@ -1,6 +1,6 @@
 <?php
 
-use Basketin\Component\Cart\Facades\CartManagement;
+use Obelaw\Basketin\Cart\Facades\CartManagement;
 
 test('Set Field', function () {
     $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');

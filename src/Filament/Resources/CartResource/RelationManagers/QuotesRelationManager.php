@@ -1,6 +1,6 @@
 <?php
 
-namespace Basketin\Component\Cart\Filament\Resources\CartResource\RelationManagers;
+namespace Obelaw\Basketin\Cart\Filament\Resources\CartResource\RelationManagers;
 
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;

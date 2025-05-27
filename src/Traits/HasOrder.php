@@ -1,8 +1,8 @@
 <?php
 
-namespace Basketin\Component\Cart\Traits;
+namespace Obelaw\Basketin\Cart\Traits;
 
-use Basketin\Component\Cart\Models\Order;
+use Obelaw\Basketin\Cart\Models\Order;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 trait HasOrder

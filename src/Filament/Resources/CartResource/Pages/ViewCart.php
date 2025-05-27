@@ -1,8 +1,8 @@
 <?php
 
-namespace Basketin\Component\Cart\Filament\Resources\CartResource\Pages;
+namespace Obelaw\Basketin\Cart\Filament\Resources\CartResource\Pages;
 
-use Basketin\Component\Cart\Filament\Resources\CartResource;
+use Obelaw\Basketin\Cart\Filament\Resources\CartResource;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;

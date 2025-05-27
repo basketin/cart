@@ -1,8 +1,8 @@
 <?php
 
-namespace Basketin\Component\Cart\Filament;
+namespace Obelaw\Basketin\Cart\Filament;
 
-use Basketin\Component\Cart\Filament\Resources\CartResource;
+use Obelaw\Basketin\Cart\Filament\Resources\CartResource;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 

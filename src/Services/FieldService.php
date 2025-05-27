@@ -1,8 +1,8 @@
 <?php
 
-namespace Basketin\Component\Cart\Services;
+namespace Obelaw\Basketin\Cart\Services;
 
-use Basketin\Component\Cart\Models\Cart;
+use Obelaw\Basketin\Cart\Models\Cart;
 
 class FieldService
 {

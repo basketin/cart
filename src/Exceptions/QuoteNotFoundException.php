@@ -1,6 +1,6 @@
 <?php
 
-namespace Basketin\Component\Cart\Exceptions;
+namespace Obelaw\Basketin\Cart\Exceptions;
 
 use Exception;
 

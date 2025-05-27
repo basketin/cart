@@ -1,6 +1,6 @@
 <?php
 
-namespace Basketin\Component\Cart\Tests\App\Providers;
+namespace Obelaw\Basketin\Cart\Tests\App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

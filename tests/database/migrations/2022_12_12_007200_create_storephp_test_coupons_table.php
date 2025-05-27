@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Basketin\Component\Cart\Calculate\CouponCalculate;
+use Obelaw\Basketin\Cart\Calculate\CouponCalculate;
 
 return new class extends Migration
 {

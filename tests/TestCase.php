@@ -1,9 +1,9 @@
 <?php
 
-namespace Basketin\Component\Cart\Tests;
+namespace Obelaw\Basketin\Cart\Tests;
 
-use Basketin\Component\Cart\Providers\BasketinCartServiceProvider;
-use Basketin\Component\Cart\Tests\App\Providers\BasketinCartTestServiceProvider;
+use Obelaw\Basketin\Cart\Providers\BasketinCartServiceProvider;
+use Obelaw\Basketin\Cart\Tests\App\Providers\BasketinCartTestServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 

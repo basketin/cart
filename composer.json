@@ -11,12 +11,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Basketin\\Component\\Cart\\": "src/"
+            "Obelaw\\Basketin\\Cart\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Basketin\\Component\\Cart\\Tests\\": "tests/"
+            "Obelaw\\Basketin\\Cart\\Tests\\": "tests/"
         }
     },
     "require": {
@@ -32,7 +32,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Basketin\\Component\\Cart\\Providers\\BasketinCartServiceProvider"
+                "Obelaw\\Basketin\\Cart\\Providers\\BasketinCartServiceProvider"
             ]
         }
     },

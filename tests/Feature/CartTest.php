@@ -1,11 +1,11 @@
 <?php
 
-use Basketin\Component\Cart\Calculate\CouponCalculate;
-use Basketin\Component\Cart\Exceptions\CartNotFoundException;
-use Basketin\Component\Cart\Facades\CartManagement;
-use Basketin\Component\Cart\Services\CartService;
-use Basketin\Component\Cart\Tests\App\Models\Coupon;
-use Basketin\Component\Cart\Tests\App\Models\Product;
+use Obelaw\Basketin\Cart\Calculate\CouponCalculate;
+use Obelaw\Basketin\Cart\Exceptions\CartNotFoundException;
+use Obelaw\Basketin\Cart\Facades\CartManagement;
+use Obelaw\Basketin\Cart\Services\CartService;
+use Obelaw\Basketin\Cart\Tests\App\Models\Coupon;
+use Obelaw\Basketin\Cart\Tests\App\Models\Product;
 
 test('Get Ulid', function () {
     $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');

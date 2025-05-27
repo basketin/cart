@@ -1,6 +1,6 @@
 <?php
 
-namespace Basketin\Component\Cart\Settings;
+namespace Obelaw\Basketin\Cart\Settings;
 
 class QuoteQuantityLimit
 {

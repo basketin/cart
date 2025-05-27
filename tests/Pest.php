@@ -11,7 +11,7 @@
 |
 */
 
-uses(Basketin\Component\Cart\Tests\TestCase::class)->in(__DIR__);
+uses(Obelaw\Basketin\Cart\Tests\TestCase::class)->in(__DIR__);
 
 /*
 |--------------------------------------------------------------------------

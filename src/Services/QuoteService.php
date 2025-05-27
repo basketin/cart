@@ -1,16 +1,16 @@
 <?php
 
-namespace Basketin\Component\Cart\Services;
+namespace Obelaw\Basketin\Cart\Services;
 
-use Basketin\Component\Cart\Contracts\IQuote;
-use Basketin\Component\Cart\Events\BasketinAddedQuoteEvent;
-use Basketin\Component\Cart\Events\BasketinDecreaseQuoteEvent;
-use Basketin\Component\Cart\Events\BasketinIncreaseQuoteEvent;
-use Basketin\Component\Cart\Events\BasketinRemoveQuoteEvent;
-use Basketin\Component\Cart\Exceptions\QuoteNotFoundException;
-use Basketin\Component\Cart\Exceptions\QuoteQuantityLimitException;
-use Basketin\Component\Cart\Models\Cart;
-use Basketin\Component\Cart\Settings\QuoteQuantityLimit;
+use Obelaw\Basketin\Cart\Contracts\IQuote;
+use Obelaw\Basketin\Cart\Events\BasketinAddedQuoteEvent;
+use Obelaw\Basketin\Cart\Events\BasketinDecreaseQuoteEvent;
+use Obelaw\Basketin\Cart\Events\BasketinIncreaseQuoteEvent;
+use Obelaw\Basketin\Cart\Events\BasketinRemoveQuoteEvent;
+use Obelaw\Basketin\Cart\Exceptions\QuoteNotFoundException;
+use Obelaw\Basketin\Cart\Exceptions\QuoteQuantityLimitException;
+use Obelaw\Basketin\Cart\Models\Cart;
+use Obelaw\Basketin\Cart\Settings\QuoteQuantityLimit;
 
 class QuoteService
 {

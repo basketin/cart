@@ -1,6 +1,6 @@
 <?php
 
-namespace Basketin\Component\Cart\Facades;
+namespace Obelaw\Basketin\Cart\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

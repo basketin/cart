@@ -1,9 +1,9 @@
 <?php
 
-use Basketin\Component\Cart\Calculate\CouponCalculate;
-use Basketin\Component\Cart\Facades\CartManagement;
-use Basketin\Component\Cart\Tests\App\Models\Coupon;
-use Basketin\Component\Cart\Tests\App\Models\Product;
+use Obelaw\Basketin\Cart\Calculate\CouponCalculate;
+use Obelaw\Basketin\Cart\Facades\CartManagement;
+use Obelaw\Basketin\Cart\Tests\App\Models\Coupon;
+use Obelaw\Basketin\Cart\Tests\App\Models\Product;
 
 test('Cart With Fixed Coupon', function () {
     $product = Product::create([

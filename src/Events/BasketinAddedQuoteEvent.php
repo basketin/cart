@@ -1,6 +1,6 @@
 <?php
 
-namespace Basketin\Component\Cart\Events;
+namespace Obelaw\Basketin\Cart\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;

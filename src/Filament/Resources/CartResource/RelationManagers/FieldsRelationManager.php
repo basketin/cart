@@ -1,6 +1,6 @@
 <?php
 
-namespace Basketin\Component\Cart\Filament\Resources\CartResource\RelationManagers;
+namespace Obelaw\Basketin\Cart\Filament\Resources\CartResource\RelationManagers;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;

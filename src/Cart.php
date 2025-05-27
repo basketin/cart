@@ -1,6 +1,6 @@
 <?php
 
-namespace Basketin\Component\Cart;
+namespace Obelaw\Basketin\Cart;
 
 class Cart
 {

@@ -1,7 +1,7 @@
 <?php
 
-use Basketin\Component\Cart\Facades\CartManagement;
-use Basketin\Component\Cart\Tests\App\Models\Product;
+use Obelaw\Basketin\Cart\Facades\CartManagement;
+use Obelaw\Basketin\Cart\Tests\App\Models\Product;
 
 test('Add Quote', function () {
     $product = Product::create([

@@ -1,9 +1,9 @@
 <?php
 
-namespace Basketin\Component\Cart\Providers;
+namespace Obelaw\Basketin\Cart\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Basketin\Component\Cart\Services\CartService;
+use Obelaw\Basketin\Cart\Services\CartService;
 
 class BasketinCartServiceProvider extends ServiceProvider
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Basketin\Component\Cart\Calculate;
+namespace Obelaw\Basketin\Cart\Calculate;
 
-use Basketin\Component\Cart\Contracts\ICoupon;
+use Obelaw\Basketin\Cart\Contracts\ICoupon;
 
 class CouponCalculate
 {

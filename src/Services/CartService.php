@@ -1,13 +1,13 @@
 <?php
 
-namespace Basketin\Component\Cart\Services;
+namespace Obelaw\Basketin\Cart\Services;
 
-use Basketin\Component\Cart\Cart;
-use Basketin\Component\Cart\Contracts\ICoupon;
-use Basketin\Component\Cart\Events\BasketinCreateCartEvent;
-use Basketin\Component\Cart\Exceptions\CartNotFoundException;
-use Basketin\Component\Cart\Repositories\CartRepository;
-use Basketin\Component\Cart\Services\FieldService;
+use Obelaw\Basketin\Cart\Cart;
+use Obelaw\Basketin\Cart\Contracts\ICoupon;
+use Obelaw\Basketin\Cart\Events\BasketinCreateCartEvent;
+use Obelaw\Basketin\Cart\Exceptions\CartNotFoundException;
+use Obelaw\Basketin\Cart\Repositories\CartRepository;
+use Obelaw\Basketin\Cart\Services\FieldService;
 use Illuminate\Support\Str;
 
 class CartService

@@ -1,8 +1,8 @@
 <?php
 
-namespace Basketin\Component\Cart\Traits;
+namespace Obelaw\Basketin\Cart\Traits;
 
-use Basketin\Component\Cart\Models\Quote;
+use Obelaw\Basketin\Cart\Models\Quote;
 
 trait HasQuote
 {

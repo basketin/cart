@@ -1,8 +1,8 @@
 <?php
 
-namespace Basketin\Component\Cart\Repositories;
+namespace Obelaw\Basketin\Cart\Repositories;
 
-use Basketin\Component\Cart\Models\Cart;
+use Obelaw\Basketin\Cart\Models\Cart;
 
 class CartRepository
 {

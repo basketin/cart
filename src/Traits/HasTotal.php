@@ -1,6 +1,6 @@
 <?php
 
-namespace Basketin\Component\Cart\Traits;
+namespace Obelaw\Basketin\Cart\Traits;
 
 trait HasTotal
 {

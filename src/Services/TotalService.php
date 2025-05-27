@@ -1,11 +1,11 @@
 <?php
 
-namespace Basketin\Component\Cart\Services;
+namespace Obelaw\Basketin\Cart\Services;
 
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Basketin\Component\Cart\Calculate\CouponCalculate;
-use Basketin\Component\Cart\Traits\HasTotal;
+use Obelaw\Basketin\Cart\Calculate\CouponCalculate;
+use Obelaw\Basketin\Cart\Traits\HasTotal;
 
 class TotalService
 {
@@ -22,7 +22,7 @@ class TotalService
                 HasTotal::class,
                 array_keys((new \ReflectionClass($quotes->first()->item_type))->getTraits())
             )) {
-                throw new Exception('You must use `Basketin\Component\Cart\Traits\HasTotal` Trait');
+                throw new Exception('You must use `Obelaw\Basketin\Cart\Traits\HasTotal` Trait');
             }
 
             foreach ($quotes as $quote) {
