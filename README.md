@@ -1,266 +1,133 @@
-<p align="center"><a href="#" target="_blank"><img src="./cover.svg"/></a></p>
-
-<p align="center">
-  <a href="https://packagist.org/packages/basketin/cart" target="_blank"><img src="https://img.shields.io/static/v1?label=Packagist&message=basketin/cart&color=blue&logo=packagist&logoColor=white" alt="Source"></a>
-  <a href="https://packagist.org/packages/basketin/cart" target="_blank"><img src="https://poser.pugx.org/basketin/cart/v" alt="Packagist Version"></a>
-</p>
-
 # Basketin Cart
 
-Cart module for eCommerce system based on Laravel.
+Laravel cart library for e-commerce. Provides carts, quotes (line items), totals, coupons, custom fields, and order preparation with a clean API.
 
-## Documentation
+[![Packagist](https://img.shields.io/static/v1?label=Packagist&message=basketin/cart&color=blue&logo=packagist&logoColor=white)](https://packagist.org/packages/basketin/cart)
+[![Version](https://poser.pugx.org/basketin/cart/v)](https://packagist.org/packages/basketin/cart)
 
-### Installation
+![Basketin Cart Cover](./cover.svg)
 
-Install via composer.
+## Requirements
+
+- PHP 8.1 or 8.2
+- Laravel 10 or 11
+- Filament 3.2+
+
+## Installation
+
+Install the package:
 
 ```bash
 composer require basketin/cart
 ```
 
-You need to migrate the package tables.
-
-```bash
-php artisan migrate --path=/vendor/basketin/cart/database/migrations
-```
-
-If you need to auth migrate without set path you can set `true` to `basketin.cart.setup.auto_migrate` at config.
-
-### Publish config
+Publish the config (optional):
 
 ```bash
 php artisan vendor:publish --tag=basketin-cart-config
 ```
 
-### How to use
+Run the migrations. You have two options:
 
-#### Create New Cart
+- Enable auto-migrations by setting `basketin.cart.setup.auto_migrate` to `true` in `config/basketin/cart.php`.
+- Or run the migrations explicitly:
+
+```bash
+php artisan migrate --path=vendor/basketin/cart/database/migrations
+```
+
+## Quick start
+
+Initialize a cart (creates one if it doesn’t exist) or open an existing cart by ULID and optional type:
 
 ```php
-<?php
-
 use Obelaw\Basketin\Cart\Facades\CartManagement;
 
-$cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD', 'ORDER'); // <- ULID
+$cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD', 'ORDER');
+// or open an existing cart
+$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'ORDER');
 ```
 
-You can open the cart if it exists or create a new cart if not exist.
-
-#### Open Exist Cart
+Common getters:
 
 ```php
-<?php
-
-use Obelaw\Basketin\Cart\Facades\CartManagement;
-
-$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'ORDER'); // <- ULID
+$cart->getUlid();        // string ULID
+$cart->getCurrency();    // string currency code
+$cart->getType();        // string|null cart type
+$cart->getCountProducts(); // number of distinct products
+$cart->getCountItems();    // total item quantity
 ```
 
-#### Get Ulid
+Session key used per cart type: `${cartType}_basketin_cart_ulid`.
+
+## Working with quotes (line items)
+
+Your purchasable model must implement `Obelaw\Basketin\Cart\Contracts\IQuote` and use the traits below to participate in the cart totals.
 
 ```php
-$cart->getUlid();
-```
-
-#### Get Currency
-
-```php
-$cart->getCurrency();
-```
-
-#### Get Type
-
-```php
-$cart->getType();
-```
-
-#### Get Count Products
-
-```php
-$cart->getCountProducts();
-```
-
-#### Get Count items
-
-```php
-$cart->getCountItems();
-```
-
-Open the existing cart only
-
-#### Add QuoteYou need to prepare a `Product` model to use like this.
-
-```php
-// Product model
-<?php
-
-...
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Obelaw\Basketin\Cart\Contracts\IQuote;
 use Obelaw\Basketin\Cart\Traits\HasQuote;
 use Obelaw\Basketin\Cart\Traits\HasTotal;
 
 class Product extends Model implements IQuote
 {
-    use HasFactory;
-    use HasQuote;
-    use HasTotal;
+    use HasFactory, HasQuote, HasTotal;
 
     public function getOriginalPriceAttribute(): float
     {
         return (float) $this->price;
     }
 
-    public function getSpecialPriceAttribute(): float|null
+    public function getSpecialPriceAttribute(): ?float
     {
-        return null;
+        return null; // or return a discounted price
     }
 }
 ```
 
-#### Add Quote
+Add / increase / decrease / remove quotes:
 
 ```php
-<?php
-
 use App\Models\Product;
 use Obelaw\Basketin\Cart\Facades\CartManagement;
 
 $product = Product::first();
+$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q');
 
-$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
 $cart->quote()->addQuote($product, 1);
-```
-
-#### Increase Quote
-
-```php
-<?php
-
-use App\Models\Product;
-use Obelaw\Basketin\Cart\Facades\CartManagement;
-
-$product = Product::first();
-
-$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
 $cart->quote()->increaseQuote($product, 5);
-```
-
-#### Decrease Quote
-
-```php
-<?php
-
-use App\Models\Product;
-use Obelaw\Basketin\Cart\Facades\CartManagement;
-
-$product = Product::first();
-
-$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
-$cart->quote()->decreaseQuote($product, 2);
-```
-
-#### Has Quote
-
-```php
-<?php
-
-use App\Models\Product;
-use Obelaw\Basketin\Cart\Facades\CartManagement;
-
-$product = Product::first();
-
-$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
-$cart->quote()->hasQuote($product);
-```
-
-#### Remove Quote
-
-```php
-<?php
-
-use App\Models\Product;
-use Obelaw\Basketin\Cart\Facades\CartManagement;
-
-$product = Product::first();
-
-$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
+$cart->quote()->decreaseQuote($product, 2); // returns false when item is removed
 $cart->quote()->removeQuote($product);
+
+$exists = $cart->quote()->hasQuote($product);
+$quotes = $cart->quote()->getQuotes();
 ```
 
-#### How to use Config
+Per-cart limits and errors:
 
-You can customize cart behavior by passing a `Config` object to your cart instance. For example, to set a custom quote limit:
+- Limit per quote is controlled by `limit_quote` (default: 5).
+- Adding or increasing beyond the limit throws `QuoteQuantityLimitException`.
+- Operating on a non-existing quote throws `QuoteNotFoundException`.
 
-```php
-use Obelaw\Basketin\Cart\Facades\CartManagement;
-use Obelaw\Basketin\Cart\Settings\Config;
-use App\Models\Product;
-
-$product = Product::create([
-    'name' => 'xBox',
-    'sku' => 12345,
-    'price' => 599,
-]);
-
-$cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
-$cart->config(new Config([
-    'limit_quote' => 15
-]));
-$cart->quote()->addQuote($product, 1);
-$cart->quote()->increaseQuote($product, 5);
-```
-
-This will allow the cart to accept up to 15 items for a quote.
-
-#### Get Cart
+## Totals and discounts
 
 ```php
-<?php
-
-use Obelaw\Basketin\Cart\Facades\CartManagement;
-
-$cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
-$cart->getCart();
-```
-
-#### Get Quotes
-
-```php
-<?php
-
-use Obelaw\Basketin\Cart\Facades\CartManagement;
-
-$cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
-$cart->quote()->getQuotes();
-```
-
-#### Get Totals
-
-```php
-<?php
-
-use Obelaw\Basketin\Cart\Facades\CartManagement;
-
-$cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
 $totals = $cart->totals();
-$totals->getSubTotal();
-$totals->getDiscountTotal();
-$totals->getGrandTotal();
-```
 
-If you need to add a global discount to the cart you can use it.
+$subTotal = $totals->getSubTotal();
+$discountTotal = $totals->getDiscountTotal(); // coupon + global discount (capped at subtotal)
+$grandTotal = $totals->getGrandTotal();
 
-```php
-$totals->setGlobalDiscountTotal(500.00)
+// Optional global discount
+$grandAfterGlobal = $totals->setGlobalDiscountTotal(500.00)
     ->getGrandTotal();
 ```
 
-### Coupon
+### Coupons
 
-#### Coupon model
-
-You need to prepare a coupon model to inject into cart services
+Provide a model that implements `Obelaw\Basketin\Cart\Contracts\ICoupon`:
 
 ```php
 use Illuminate\Database\Eloquent\Model;
@@ -269,69 +136,89 @@ use Obelaw\Basketin\Cart\Contracts\ICoupon;
 class Coupon extends Model implements ICoupon
 {
     protected $fillable = [
-        'coupon_name',
-        'coupon_code',
-        'discount_type',
-        'discount_value',
-        'start_at',
-        'ends_at',
+        'coupon_name', 'coupon_code', 'discount_type', 'discount_value', 'start_at', 'ends_at',
     ];
 
-    public function discountType(): String
-    {
-        return $this->discount_type;
-    }
-
-    public function discountValue(): Int
-    {
-        return $this->discount_value;
-    }
+    public function discountType(): string { return $this->discount_type; }
+    public function discountValue(): int { return $this->discount_value; }
 }
 ```
 
-> The discount type: `fixed` = `CouponCalculate::FIXED` | `percent` = `CouponCalculate::PERCENT`
-
-To apply coupon code on cart:-
+Attach a coupon to the cart and compute totals:
 
 ```php
+use Obelaw\Basketin\Cart\Calculate\CouponCalculate;
+
 $coupon = Coupon::first();
 $cart->coupon($coupon);
+
+$discount = (new CouponCalculate($coupon))
+    ->setSubTotal($cart->totals()->getSubTotal())
+    ->getSubTotal();
 ```
 
-> And you can use `$this->couponInfo()` to get coupon info
+Supported types: `fixed` (`CouponCalculate::FIXED`) and `percent` (`CouponCalculate::PERCENT`).
 
-### Fields
+## Custom fields
 
-You can create fields that contain a key and values for each shopping cart.
-
-#### Set Field
+Key-value fields attached to a cart:
 
 ```php
-return $cart->fields()->set('key', 'value');
+$cart->fields()->set('shipping_method', 'express');
+$cart->fields()->get('shipping_method');
+$cart->fields()->has('shipping_method');
+$cart->fields()->remove('shipping_method');
 ```
 
-#### Get Field
+## Orders lifecycle
+
+Prepare and associate an order, then checkout:
 
 ```php
-return $cart->fields()->get('key');
+$order = $cart->preparingOrder(); // ensures a cart order and sets fields.order_reference
+
+// Associate with your domain order model
+// $yourOrder->cartOrder()->save($order);
+$cart->syncOrder($yourOrder);
+
+$cart->checkoutIt('ORDER'); // marks cart as checkout and clears session for that type
 ```
 
-#### Remove
+## Events
+
+- `BasketinCreateCartEvent` — fired when a cart is initialized.
+- `BasketinAddedQuoteEvent` — after adding a quote.
+- `BasketinIncreaseQuoteEvent` — after increasing a quote quantity.
+- `BasketinDecreaseQuoteEvent` — after decreasing a quote quantity.
+- `BasketinRemoveQuoteEvent` — after removing a quote.
+
+## Configuration
+
+`config/basketin/cart.php` (after publishing):
+
+- `setup.auto_migrate` (bool): auto-load migrations when running in console. Default: `false`.
+- `limit_quote` (int): max quantity per single quote. Default: `5`.
+
+You can also override behavior at runtime via the settings object:
 
 ```php
-return $cart->fields()->remove('key');
+use Obelaw\Basketin\Cart\Settings\Config;
+
+$cart->config(new Config([
+    'limit_quote' => 15,
+]));
 ```
 
-#### Has Field
+## Testing
 
-```php
-return $cart->fields()->has('key');
+```bash
+composer test
 ```
 
 ## Contributing
 
-Thank you for considering contributing to this package! Be one of the Store team.
+Issues and PRs are welcome. Please include tests when contributing behavior changes.
 
 ## License
 
-This package is an open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This package is open-sourced software licensed under the MIT license.
