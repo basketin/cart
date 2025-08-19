@@ -188,6 +188,31 @@ $cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q'); // <- ULID
 $cart->quote()->removeQuote($product);
 ```
 
+#### How to use Config
+
+You can customize cart behavior by passing a `Config` object to your cart instance. For example, to set a custom quote limit:
+
+```php
+use Obelaw\Basketin\Cart\Facades\CartManagement;
+use Obelaw\Basketin\Cart\Settings\Config;
+use App\Models\Product;
+
+$product = Product::create([
+    'name' => 'xBox',
+    'sku' => 12345,
+    'price' => 599,
+]);
+
+$cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+$cart->config(new Config([
+    'limit_quote' => 15
+]));
+$cart->quote()->addQuote($product, 1);
+$cart->quote()->increaseQuote($product, 5);
+```
+
+This will allow the cart to accept up to 15 items for a quote.
+
 #### Get Cart
 
 ```php

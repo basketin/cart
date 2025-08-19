@@ -31,9 +31,9 @@ test('Increase Quote', function () {
 
     $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
-    $cart->quote()->increaseQuote($product, 5);
+    $cart->quote()->increaseQuote($product, 4);
 
-    expect($cart->quote()->getQuotes()->toArray()[0]['quantity'])->toEqual(6);
+    expect($cart->quote()->getQuotes()->toArray()[0]['quantity'])->toEqual(5);
 });
 
 test('Decrease Quote', function () {
@@ -46,10 +46,10 @@ test('Decrease Quote', function () {
 
     $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
-    $cart->quote()->increaseQuote($product, 5);
+    $cart->quote()->increaseQuote($product, 4);
     $cart->quote()->decreaseQuote($product, 3);
 
-    expect($cart->quote()->getQuotes()->toArray()[0]['quantity'])->toEqual(3);
+    expect($cart->quote()->getQuotes()->toArray()[0]['quantity'])->toEqual(2);
 });
 
 test('Decrease Quote To Be Remove', function () {
