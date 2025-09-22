@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'connection' => 'mysql',
+
     'setup' => [
         'auto_migrate' => false,
     ],

@@ -5,9 +5,12 @@ namespace Obelaw\Basketin\Cart\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Str;
+use Obelaw\Basketin\Cart\Traits\HasConnection;
 
 class Order extends Model
 {
+    use HasConnection;
+
     /**
      * The table associated with the model.
      *
