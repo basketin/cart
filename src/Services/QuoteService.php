@@ -58,7 +58,7 @@ class QuoteService
         if (($existing->quantity + $quantity) > $this->config->get('limit_quote')) {
             throw new QuoteQuantityLimitException;
         }
-        $item->quote()->increment('quantity', $quantity);
+        $existing->increment('quantity', $quantity);
         BasketinIncreaseQuoteEvent::dispatch($this->cartService->getUlid(), $item, $quantity);
         return $this;
     }
