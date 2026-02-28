@@ -10,10 +10,12 @@ use Obelaw\Basketin\Cart\Exceptions\CartNotFoundException;
 use Obelaw\Basketin\Cart\Repositories\CartRepository;
 use Obelaw\Basketin\Cart\Services\FieldService;
 use Obelaw\Basketin\Cart\Settings\Config;
-
+use Illuminate\Support\Traits\Macroable;
 
 class CartService
 {
+    use Macroable;
+
     public const SESSION_KEY = 'basketin_cart_ulid';
 
     private ?ICoupon $coupon = null;
