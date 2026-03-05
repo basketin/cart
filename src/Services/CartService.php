@@ -4,7 +4,6 @@ namespace Obelaw\Basketin\Cart\Services;
 
 use Illuminate\Support\Str;
 use Obelaw\Basketin\Cart\Cart;
-use Obelaw\Basketin\Cart\Contracts\ICoupon;
 use Obelaw\Basketin\Cart\Events\BasketinCreateCartEvent;
 use Obelaw\Basketin\Cart\Exceptions\CartNotFoundException;
 use Obelaw\Basketin\Cart\Repositories\CartRepository;
@@ -18,7 +17,6 @@ class CartService
 
     public const SESSION_KEY = 'basketin_cart_ulid';
 
-    private ?ICoupon $coupon = null;
     private $currentCart = null;
     private Config $config;
 
@@ -145,28 +143,11 @@ class CartService
     }
 
     /**
-     * Set coupon for cart.
-     */
-    public function coupon(ICoupon $coupon): self
-    {
-        $this->coupon = $coupon;
-        return $this;
-    }
-
-    /**
-     * Get coupon info.
-     */
-    public function couponInfo(): ?ICoupon
-    {
-        return $this->coupon;
-    }
-
-    /**
      * Get totals service.
      */
     public function totals(): TotalService
     {
-        return new TotalService($this->currentCart->quotes, $this->coupon);
+        return new TotalService($this->currentCart->quotes);
     }
 
     /**
