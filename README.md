@@ -12,7 +12,6 @@ Laravel cart library for e-commerce. Provides carts, quotes (line items), totals
 
 - PHP 8.1 or 8.2
 - Laravel 10 or 11
-- Filament 3.2+
 
 ## Installation
 
