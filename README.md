@@ -38,14 +38,15 @@ php artisan migrate --path=vendor/basketin/cart/database/migrations
 
 ## Quick start
 
-Initialize a cart (creates one if it doesn’t exist) or open an existing cart by ULID and optional type:
+Create/open a cart via `make()`:
 
 ```php
 use Obelaw\Basketin\Cart\Facades\CartManagement;
 
-$cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD', 'ORDER');
-// or open an existing cart
-$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'ORDER');
+$cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD', 'ORDER');
+
+// open only mode (throws CartNotFoundException if cart does not exist)
+$cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD', 'ORDER', false);
 ```
 
 Common getters:
@@ -94,7 +95,7 @@ use App\Models\Product;
 use Obelaw\Basketin\Cart\Facades\CartManagement;
 
 $product = Product::first();
-$cart = CartManagement::openCart('01HF7V7N1MG9SDFPQYWXDNHR9Q');
+$cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD', null, false);
 
 $cart->quote()->addQuote($product, 1);
 $cart->quote()->increaseQuote($product, 5);

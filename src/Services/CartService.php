@@ -30,34 +30,52 @@ class CartService
     }
 
     /**
-     * Initialize a cart, create if not exists.
+     * Make cart instance.
+     *
+     * When $createIfNotExists is true, this behaves like the old initCart method.
+     * When false, this behaves like the old openCart method.
      */
-    public function initCart(?string $ulid = null, string $currency = 'USD', ?string $cartType = null): self
+    public static function make(?string $ulid = null, string $currency = 'USD', ?string $cartType = null, bool $createIfNotExists = true): self
     {
-        $ulid = $ulid ?? session($cartType . '_' . self::SESSION_KEY, null) ?? (string) Str::ulid();
+        if (static::class === self::class && function_exists('app')) {
+            $service = app('basketin.cart.cartservice');
 
-        if (!$cart = $this->cartRepository->getCartByUlid($ulid)) {
-            $cart = $this->cartRepository->createNewCart($ulid, $currency, $cartType);
+            if ($service instanceof self) {
+                return $service->buildCart($ulid, $currency, $cartType, $createIfNotExists);
+            }
         }
 
-        $this->currentCart = $cart;
-        session([$cartType . '_' . self::SESSION_KEY => $this->getUlid()]);
-        Cart::setCart($this);
-        BasketinCreateCartEvent::dispatch($this->getUlid());
-        return $this;
+        $service = new static(new CartRepository());
+
+        return $service->buildCart($ulid, $currency, $cartType, $createIfNotExists);
     }
 
-    /**
-     * Open an existing cart.
-     */
-    public function openCart(?string $ulid = null, ?string $cartType = null): self
+    protected function buildCart(?string $ulid = null, string $currency = 'USD', ?string $cartType = null, bool $createIfNotExists = true): self
     {
-        $ulid = $ulid ?? session($cartType . '_' . self::SESSION_KEY, null);
+        $sessionKey = $cartType . '_' . self::SESSION_KEY;
+
+        if ($createIfNotExists) {
+            $ulid = $ulid ?? session($sessionKey, null) ?? (string) Str::ulid();
+            if (!$cart = $this->cartRepository->getCartByUlid($ulid)) {
+                $cart = $this->cartRepository->createNewCart($ulid, $currency, $cartType);
+            }
+
+            $this->currentCart = $cart;
+            session([$sessionKey => $this->getUlid()]);
+            Cart::setCart($this);
+            BasketinCreateCartEvent::dispatch($this->getUlid());
+
+            return $this;
+        }
+
+        $ulid = $ulid ?? session($sessionKey, null);
         if (!$cart = $this->cartRepository->getCartByUlid($ulid)) {
             throw new CartNotFoundException();
         }
+
         $this->currentCart = $cart;
         Cart::setCart($this);
+
         return $this;
     }
 

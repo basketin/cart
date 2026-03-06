@@ -11,7 +11,7 @@ test('Add Quote', function () {
 
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
 
     expect($cart->quote()->getQuotes()->toArray()[0]['item'])->toMatchArray([
@@ -29,7 +29,7 @@ test('Increase Quote', function () {
 
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
     $cart->quote()->increaseQuote($product, 4);
 
@@ -44,7 +44,7 @@ test('Decrease Quote', function () {
 
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
     $cart->quote()->increaseQuote($product, 4);
     $cart->quote()->decreaseQuote($product, 3);
@@ -60,7 +60,7 @@ test('Decrease Quote To Be Remove', function () {
 
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
     $cart->quote()->decreaseQuote($product, 1);
 
@@ -75,7 +75,7 @@ test('Has Quote', function () {
 
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
 
     expect($cart->quote()->hasQuote($product))->toEqual(true);
@@ -89,7 +89,7 @@ test('Not Has Quote', function () {
 
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
 
     expect($cart->quote()->hasQuote($product))->toEqual(false);
 });
@@ -102,7 +102,7 @@ test('Remove Quote', function () {
 
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
     $cart->quote()->removeQuote($product);
 

@@ -13,7 +13,7 @@ test('Add Quote Exceed Limit', function () {
         'price' => 499,
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->config(new Config([
         'limit_quote' => 2,
     ]));
@@ -28,7 +28,7 @@ test('Increase Quote Not Found', function () {
         'price' => 299,
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
 
     $cart->quote()->increaseQuote($product, 1);
 })->throws(QuoteNotFoundException::class);
@@ -40,7 +40,7 @@ test('Increase Quote Exceed Limit', function () {
         'price' => 99,
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->config(new Config([
         'limit_quote' => 5,
     ]));
@@ -57,7 +57,7 @@ test('Decrease Quote Not Found', function () {
         'price' => 49,
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
 
     $cart->quote()->decreaseQuote($product, 1);
 })->throws(QuoteNotFoundException::class);
@@ -69,7 +69,7 @@ test('Remove Quote Not Found', function () {
         'price' => 79,
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
 
     $cart->quote()->removeQuote($product);
 })->throws(QuoteNotFoundException::class);

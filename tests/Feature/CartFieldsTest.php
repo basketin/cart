@@ -3,7 +3,7 @@
 use Obelaw\Basketin\Cart\Facades\CartManagement;
 
 test('Set Field', function () {
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
 
     $cart->fields()->set('key', 'value');
 
@@ -13,7 +13,7 @@ test('Set Field', function () {
 });
 
 test('Update Field', function () {
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
 
     $cart->fields()->set('key', 'value');
 
@@ -25,7 +25,7 @@ test('Update Field', function () {
 });
 
 test('Get Field', function () {
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
 
     $cart->fields()->set('key', 'value');
 
@@ -33,7 +33,7 @@ test('Get Field', function () {
 });
 
 test('Has Field', function () {
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
 
     $cart->fields()->set('key', 'value');
 
@@ -41,7 +41,7 @@ test('Has Field', function () {
 });
 
 test('Not Has Field', function () {
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
 
     $cart->fields()->set('key', 'value');
 
@@ -50,7 +50,7 @@ test('Not Has Field', function () {
 
 
 test('Remove Field', function () {
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
 
     $cart->fields()->set('key', 'value');
 

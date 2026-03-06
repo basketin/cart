@@ -11,7 +11,7 @@ test('Get Item Final Total', function () {
         'price' => 599,
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
 
     $totals = $cart->totals();
@@ -27,7 +27,7 @@ test('Get Discount Total', function () {
 
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
 
     $totals = $cart->totals();
@@ -43,7 +43,7 @@ test('Get Grand Total', function () {
 
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
 
     $totals = $cart->totals();
@@ -59,7 +59,7 @@ test('Set Global Discount Total', function () {
 
     ]);
 
-    $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
 
     $totals = $cart->totals();
@@ -78,7 +78,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -95,7 +95,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -112,7 +112,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -136,7 +136,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -153,7 +153,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -173,7 +173,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -193,7 +193,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -212,7 +212,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
