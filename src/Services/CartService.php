@@ -165,7 +165,7 @@ class CartService
      */
     public function totals(): TotalService
     {
-        return new TotalService($this->currentCart->quotes);
+        return new TotalService($this, $this->currentCart->refresh()->quotes);
     }
 
     /**

@@ -37,6 +37,7 @@ class TotalService
      * @throws Exception
      */
     public function __construct(
+        private CartService $cartService,
         private Collection $quotes,
     ) {
         if ($quotes->isNotEmpty()) {
@@ -51,6 +52,14 @@ class TotalService
                 $this->itemDiscountTotal += $quote->quantity * $quote->item->discount_price;
             }
         }
+    }
+
+    /**
+     * Get the cart service.
+     */
+    public function getCartService(): CartService
+    {
+        return $this->cartService;
     }
 
     /**
