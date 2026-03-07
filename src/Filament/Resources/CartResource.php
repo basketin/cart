@@ -4,7 +4,6 @@ namespace Obelaw\Basketin\Cart\Filament\Resources;
 
 use Obelaw\Basketin\Cart\Filament\Resources\CartResource\Pages\ListCarts;
 use Obelaw\Basketin\Cart\Filament\Resources\CartResource\Pages\ViewCart;
-use Obelaw\Basketin\Cart\Filament\Resources\CartResource\RelationManagers\FieldsRelationManager;
 use Obelaw\Basketin\Cart\Filament\Resources\CartResource\RelationManagers\QuotesRelationManager;
 use Obelaw\Basketin\Cart\Models\Cart;
 use Filament\Forms\Form;
@@ -70,7 +69,6 @@ class CartResource extends Resource
     {
         return [
             QuotesRelationManager::class,
-            FieldsRelationManager::class,
         ];
     }
 

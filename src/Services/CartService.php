@@ -8,7 +8,6 @@ use Obelaw\Basketin\Cart\Contracts\ICoupon;
 use Obelaw\Basketin\Cart\Events\BasketinCreateCartEvent;
 use Obelaw\Basketin\Cart\Exceptions\CartNotFoundException;
 use Obelaw\Basketin\Cart\Repositories\CartRepository;
-use Obelaw\Basketin\Cart\Services\FieldService;
 use Obelaw\Basketin\Cart\Settings\Config;
 use Illuminate\Support\Traits\Macroable;
 
@@ -137,14 +136,6 @@ class CartService
     }
 
     /**
-     * Get field service.
-     */
-    public function fields(): FieldService
-    {
-        return new FieldService($this->currentCart);
-    }
-
-    /**
      * Set coupon for cart.
      */
     public function coupon(ICoupon $coupon): self
@@ -178,7 +169,6 @@ class CartService
         if (!$order) {
             $order = $this->currentCart->order()->create();
         }
-        $this->fields()->set('order_reference', $order->reference);
         return $order;
     }
 

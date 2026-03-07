@@ -160,23 +160,12 @@ $discount = (new CouponCalculate($coupon))
 
 Supported types: `fixed` (`CouponCalculate::FIXED`) and `percent` (`CouponCalculate::PERCENT`).
 
-## Custom fields
-
-Key-value fields attached to a cart:
-
-```php
-$cart->fields()->set('shipping_method', 'express');
-$cart->fields()->get('shipping_method');
-$cart->fields()->has('shipping_method');
-$cart->fields()->remove('shipping_method');
-```
-
 ## Orders lifecycle
 
 Prepare and associate an order, then checkout:
 
 ```php
-$order = $cart->preparingOrder(); // ensures a cart order and sets fields.order_reference
+$order = $cart->preparingOrder(); // ensures a cart order
 
 // Associate with your domain order model
 // $yourOrder->cartOrder()->save($order);
