@@ -98,14 +98,6 @@ class CartService
     }
 
     /**
-     * Manage config.
-     */
-    public function manageConfig(): Config
-    {
-        return $this->config;
-    }
-
-    /**
      * Get cart ULID.
      */
     public function getUlid(): string

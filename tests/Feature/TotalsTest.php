@@ -415,11 +415,53 @@ describe('Cart Base Manage', function () {
     });
 
     test('config override with TestCart', function () {
-        $cart = TestCart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->config(new \Obelaw\Basketin\Cart\Settings\Config([
             'limit_quote' => 10,
         ]));
 
         expect($cart->getConfig()->get('limit_quote'))->toEqual(10);
+    });
+
+    test('manageConfig is called and modifies config', function () {
+        $cart = TestCart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+
+        expect($cart->getConfig()->get('custom_config'))->toEqual('test_value');
+        expect($cart->getConfig()->get('limit_quote'))->toEqual(20);
+    });
+
+    test('manageConfig can override default config', function () {
+        $cart = TestCart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+
+        expect($cart->getConfig()->get('limit_quote'))->toEqual(20);
+    });
+
+    test('manageConfig adds custom config values', function () {
+        $cart = TestCart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+
+        expect($cart->getConfig()->get('custom_config'))->toBeString();
+        expect($cart->getConfig()->all())->toHaveKey('custom_config');
+    });
+
+    test('manageConfig works with empty cart', function () {
+        $cart = TestCart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+
+        expect($cart->getCountProducts())->toEqual(0);
+        expect($cart->getConfig()->get('custom_config'))->toEqual('test_value');
+    });
+
+    test('manageConfig works with cart that has quotes', function () {
+        $product = Product::create([
+            'name' => 'xBox',
+            'sku' => 12345,
+            'price' => 599,
+        ]);
+
+        $cart = TestCart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart->quote()->addQuote($product, 1);
+
+        expect($cart->getCountProducts())->toEqual(1);
+        expect($cart->getConfig()->get('custom_config'))->toEqual('test_value');
+        expect($cart->getConfig()->get('limit_quote'))->toEqual(20);
     });
 })->group('cart-class');
