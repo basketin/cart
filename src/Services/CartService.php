@@ -159,6 +159,7 @@ class CartService
     public function coupon(ICoupon $coupon): self
     {
         $this->coupon = $coupon;
+
         return $this;
     }
 
