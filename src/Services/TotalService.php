@@ -4,45 +4,35 @@ namespace Obelaw\Basketin\Cart\Services;
 
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Obelaw\Basketin\Cart\Calculate\CouponCalculate;
+use Illuminate\Support\Traits\Macroable;
+use Obelaw\Basketin\Cart\Services\Resources\AmountsResource;
 use Obelaw\Basketin\Cart\Traits\HasTotal;
-
 
 class TotalService
 {
-    /**
-     * @var float
-     */
+    use Macroable;
+
     private float $itemFinalTotal = 0;
 
-    /**
-     * @var float
-     */
     private float $itemDiscountTotal = 0;
 
-    /**
-     * @var float|null
-     */
     private ?float $globalDiscountTotal = null;
 
-    /**
-     * @var mixed|null
-     */
-    private $coupon = null;
+    private array $additions = [];
+
+    private array $discounts = [];
 
     /**
      * TotalService constructor.
-     * @param Collection $quotes
-     * @param mixed|null $coupon
+     *
      * @throws Exception
      */
     public function __construct(
+        private CartService $cartService,
         private Collection $quotes,
-        $coupon = null,
     ) {
-        $this->coupon = $coupon;
         if ($quotes->isNotEmpty()) {
-            if (!in_array(
+            if (! in_array(
                 HasTotal::class,
                 array_keys((new \ReflectionClass($quotes->first()->item_type))->getTraits())
             )) {
@@ -53,6 +43,14 @@ class TotalService
                 $this->itemDiscountTotal += $quote->quantity * $quote->item->discount_price;
             }
         }
+    }
+
+    /**
+     * Get the cart service.
+     */
+    public function getCartService(): CartService
+    {
+        return $this->cartService;
     }
 
     /**
@@ -69,6 +67,7 @@ class TotalService
     public function setGlobalDiscountTotal(float $globalDiscountTotal): self
     {
         $this->globalDiscountTotal = $globalDiscountTotal;
+
         return $this;
     }
 
@@ -97,31 +96,67 @@ class TotalService
     }
 
     /**
-     * Get the coupon object.
+     * Append an addition amount. If a key is provided, multiple amounts
+     * can be stored under the same key.
      */
-    public function getCoupon()
+    public function applyAddition(float $amount, ?string $key = null): self
     {
-        return $this->coupon;
+        if (is_null($key)) {
+            $this->additions[] = $amount;
+
+            return $this;
+        }
+        if (! isset($this->additions[$key])) {
+            $this->additions[$key] = [];
+        }
+        if (! is_array($this->additions[$key])) {
+            $this->additions[$key] = [$this->additions[$key]];
+        }
+        $this->additions[$key][] = $amount;
+
+        return $this;
     }
 
     /**
-     * Get the total discount (coupon + global), never exceeding subtotal.
+     * Append a discount amount. If a key is provided, multiple amounts
+     * can be stored under the same key.
+     */
+    public function applyDiscount(float $amount, ?string $key = null): self
+    {
+        if (is_null($key)) {
+            $this->discounts[] = $amount;
+
+            return $this;
+        }
+        if (! isset($this->discounts[$key])) {
+            $this->discounts[$key] = [];
+        }
+        if (! is_array($this->discounts[$key])) {
+            $this->discounts[$key] = [$this->discounts[$key]];
+        }
+        $this->discounts[$key][] = $amount;
+
+        return $this;
+    }
+
+    public function getAdditions(): AmountsResource
+    {
+        return new AmountsResource($this->additions);
+    }
+
+    public function getDiscounts(): AmountsResource
+    {
+        return new AmountsResource($this->discounts);
+    }
+
+    /**
+     * Get the total discount (global + item), never exceeding subtotal.
      */
     public function getDiscountTotal(): float
     {
-        $deductions = 0;
-        if ($this->coupon) {
-            $deductions += (float) (new CouponCalculate($this->coupon))
-                ->setSubTotal($this->getSubTotal())
-                ->getSubTotal();
-        }
-        if ($globalDiscountTotal = $this->getGlobalDiscountTotal()) {
-            $deductions += $globalDiscountTotal;
-        }
-        if ($deductions >= $this->getSubTotal()) {
-            return $this->getSubTotal();
-        }
-        return (float) $deductions;
+        $totalDiscount = $this->getDiscounts()->sum() + $this->getGlobalDiscountTotal() + $this->getItemDiscountTotal();
+
+        return (float) $totalDiscount;
     }
 
     /**
@@ -129,6 +164,6 @@ class TotalService
      */
     public function getGrandTotal(): float
     {
-        return (float) $this->getSubTotal() - $this->getDiscountTotal();
+        return (float) ($this->getSubTotal() + $this->getAdditions()->sum()) - $this->getDiscountTotal();
     }
 }

@@ -6,7 +6,6 @@ use Obelaw\Basketin\Cart\Providers\BasketinCartServiceProvider;
 use Obelaw\Basketin\Cart\Tests\App\Providers\BasketinCartTestServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
-
 class TestCase extends BaseTestCase
 {
     protected function setUp(): void
@@ -37,6 +36,8 @@ class TestCase extends BaseTestCase
             'database' => ':memory:',
             'prefix' => '',
         ]);
+        // ensure package models use the testing connection instead of the default package connection
+        $app['config']->set('basketin.cart.connection', 'testing');
         $app['config']->set('basketin.cart.setup.auto_migrate', true);
     }
 }

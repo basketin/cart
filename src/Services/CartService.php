@@ -3,13 +3,12 @@
 namespace Obelaw\Basketin\Cart\Services;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
 use Obelaw\Basketin\Cart\Cart;
-use Obelaw\Basketin\Cart\Contracts\ICoupon;
 use Obelaw\Basketin\Cart\Events\BasketinCreateCartEvent;
 use Obelaw\Basketin\Cart\Exceptions\CartNotFoundException;
 use Obelaw\Basketin\Cart\Repositories\CartRepository;
 use Obelaw\Basketin\Cart\Settings\Config;
-use Illuminate\Support\Traits\Macroable;
 
 class CartService
 {
@@ -17,8 +16,8 @@ class CartService
 
     public const SESSION_KEY = 'basketin_cart_ulid';
 
-    private ?ICoupon $coupon = null;
     private $currentCart = null;
+
     private Config $config;
 
     /**
@@ -27,38 +26,56 @@ class CartService
     public function __construct(
         private CartRepository $cartRepository,
     ) {
-        $this->config = new Config();
+        $this->config = new Config;
     }
 
     /**
-     * Initialize a cart, create if not exists.
+     * Make cart instance.
+     *
+     * When $createIfNotExists is true, this behaves like the old initCart method.
+     * When false, this behaves like the old openCart method.
      */
-    public function initCart(?string $ulid = null, string $currency = 'USD', ?string $cartType = null): self
+    public static function make(?string $ulid = null, string $currency = 'USD', ?string $cartType = null, bool $createIfNotExists = true): self
     {
-        $ulid = $ulid ?? session($cartType . '_' . self::SESSION_KEY, null) ?? (string) Str::ulid();
+        if (static::class === self::class && function_exists('app')) {
+            $service = app('basketin.cart.cartservice');
 
-        if (!$cart = $this->cartRepository->getCartByUlid($ulid)) {
-            $cart = $this->cartRepository->createNewCart($ulid, $currency, $cartType);
+            if ($service instanceof self) {
+                return $service->buildCart($ulid, $currency, $cartType, $createIfNotExists);
+            }
         }
 
-        $this->currentCart = $cart;
-        session([$cartType . '_' . self::SESSION_KEY => $this->getUlid()]);
-        Cart::setCart($this);
-        BasketinCreateCartEvent::dispatch($this->getUlid());
-        return $this;
+        $service = new static(new CartRepository);
+
+        return $service->buildCart($ulid, $currency, $cartType, $createIfNotExists);
     }
 
-    /**
-     * Open an existing cart.
-     */
-    public function openCart(?string $ulid = null, ?string $cartType = null): self
+    protected function buildCart(?string $ulid = null, string $currency = 'USD', ?string $cartType = null, bool $createIfNotExists = true): self
     {
-        $ulid = $ulid ?? session($cartType . '_' . self::SESSION_KEY, null);
-        if (!$cart = $this->cartRepository->getCartByUlid($ulid)) {
-            throw new CartNotFoundException();
+        $sessionKey = $cartType.'_'.self::SESSION_KEY;
+
+        if ($createIfNotExists) {
+            $ulid = $ulid ?? session($sessionKey, null) ?? (string) Str::ulid();
+            if (! $cart = $this->cartRepository->getCartByUlid($ulid)) {
+                $cart = $this->cartRepository->createNewCart($ulid, $currency, $cartType);
+            }
+
+            $this->currentCart = $cart;
+            session([$sessionKey => $this->getUlid()]);
+            Cart::setCart($this);
+            BasketinCreateCartEvent::dispatch($this->getUlid());
+
+            return $this;
         }
+
+        $ulid = $ulid ?? session($sessionKey, null);
+        if (! $cart = $this->cartRepository->getCartByUlid($ulid)) {
+            throw new CartNotFoundException;
+        }
+
         $this->currentCart = $cart;
         Cart::setCart($this);
+
         return $this;
     }
 
@@ -68,6 +85,7 @@ class CartService
     public function config(Config $config): self
     {
         $this->config = $config;
+
         return $this;
     }
 
@@ -136,6 +154,7 @@ class CartService
     }
 
     /**
+<<<<<<< HEAD
      * Set coupon for cart.
      */
     public function coupon(ICoupon $coupon): self
@@ -150,6 +169,13 @@ class CartService
     public function couponInfo(): ?ICoupon
     {
         return $this->coupon;
+=======
+     * Get field service.
+     */
+    public function fields(): FieldService
+    {
+        return new FieldService($this->currentCart);
+>>>>>>> V2
     }
 
     /**
@@ -157,7 +183,7 @@ class CartService
      */
     public function totals(): TotalService
     {
-        return new TotalService($this->currentCart->quotes, $this->coupon);
+        return new TotalService($this, $this->currentCart->refresh()->quotes);
     }
 
     /**
@@ -166,9 +192,14 @@ class CartService
     public function preparingOrder()
     {
         $order = $this->currentCart->order()->first();
-        if (!$order) {
+        if (! $order) {
             $order = $this->currentCart->order()->create();
         }
+<<<<<<< HEAD
+=======
+        $this->fields()->set('order_reference', $order->reference);
+
+>>>>>>> V2
         return $order;
     }
 
@@ -187,12 +218,14 @@ class CartService
     public function checkoutIt(?string $cartType = null): bool
     {
         $updated = $this->getCart()->update([
-            'status' => 'checkout'
+            'status' => 'checkout',
         ]);
         if ($updated) {
-            session()->forget($cartType . '_' . self::SESSION_KEY);
+            session()->forget($cartType.'_'.self::SESSION_KEY);
+
             return true;
         }
+
         return false;
     }
 }
