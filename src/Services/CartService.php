@@ -178,7 +178,6 @@ class CartService
         if (! $order) {
             $order = $this->currentCart->order()->create();
         }
-        $this->fields()->set('order_reference', $order->reference);
 
         return $order;
     }

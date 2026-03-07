@@ -41,9 +41,4 @@ class Cart extends Model
     {
         return $this->hasMany(Quote::class, 'cart_id', 'id');
     }
-
-    public function fields()
-    {
-        return $this->hasMany(Field::class, 'cart_id', 'id');
-    }
 }

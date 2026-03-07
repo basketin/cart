@@ -384,15 +384,6 @@ describe('Cart Base Manage', function () {
         expect($cart->getCart()->status)->toEqual('checkout');
     });
 
-    test('fields work with TestCart', function () {
-        $cart = TestCart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
-
-        $cart->fields()->set('coupon_code', 'SAVE100');
-
-        expect($cart->fields()->get('coupon_code'))->toEqual('SAVE100');
-        expect($cart->fields()->has('coupon_code'))->toBeTrue();
-    });
-
     test('quote operations with TestCart', function () {
         $product = Product::create([
             'name' => 'xBox',
