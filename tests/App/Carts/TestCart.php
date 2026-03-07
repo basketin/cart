@@ -5,10 +5,10 @@ namespace Obelaw\Basketin\Cart\Tests\App\Carts;
 use Obelaw\Basketin\Cart\Base\CartBase;
 use Obelaw\Basketin\Cart\Contracts\HasManageConfig;
 use Obelaw\Basketin\Cart\Contracts\HasManageTotals;
-use Obelaw\Basketin\Cart\Settings\Config;
 use Obelaw\Basketin\Cart\Services\TotalService;
+use Obelaw\Basketin\Cart\Settings\Config;
 
-class TestCart extends CartBase implements HasManageTotals, HasManageConfig
+class TestCart extends CartBase implements HasManageConfig, HasManageTotals
 {
     public function manageTotals(TotalService $totals): void
     {
