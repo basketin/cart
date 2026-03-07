@@ -48,7 +48,6 @@ test('Not Has Field', function () {
     expect($cart->fields()->has('key1'))->toEqual(false);
 });
 
-
 test('Remove Field', function () {
     $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
 

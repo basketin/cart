@@ -8,7 +8,7 @@ use Obelaw\Basketin\Cart\Traits\HasConnection;
 class Field extends Model
 {
     use HasConnection;
-    
+
     /**
      * The table associated with the model.
      *

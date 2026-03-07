@@ -6,7 +6,6 @@ use Obelaw\Basketin\Cart\Providers\BasketinCartServiceProvider;
 use Obelaw\Basketin\Cart\Tests\App\Providers\BasketinCartTestServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
-
 class TestCase extends BaseTestCase
 {
     protected function setUp(): void

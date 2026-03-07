@@ -5,25 +5,16 @@ namespace Obelaw\Basketin\Cart\Services;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Traits\Macroable;
-use Obelaw\Basketin\Cart\Traits\HasTotal;
 use Obelaw\Basketin\Cart\Services\Resources\AmountsResource;
+use Obelaw\Basketin\Cart\Traits\HasTotal;
 
 class TotalService
 {
     use Macroable;
 
-    /**
-     * @var float
-     */
     private float $itemFinalTotal = 0;
 
-    /**
-     * @var float
-     */
     private float $itemDiscountTotal = 0;
-    /**
-     * @var float|null
-     */
 
     private ?float $globalDiscountTotal = null;
 
@@ -33,7 +24,7 @@ class TotalService
 
     /**
      * TotalService constructor.
-     * @param Collection $quotes
+     *
      * @throws Exception
      */
     public function __construct(
@@ -41,7 +32,7 @@ class TotalService
         private Collection $quotes,
     ) {
         if ($quotes->isNotEmpty()) {
-            if (!in_array(
+            if (! in_array(
                 HasTotal::class,
                 array_keys((new \ReflectionClass($quotes->first()->item_type))->getTraits())
             )) {
@@ -76,6 +67,7 @@ class TotalService
     public function setGlobalDiscountTotal(float $globalDiscountTotal): self
     {
         $this->globalDiscountTotal = $globalDiscountTotal;
+
         return $this;
     }
 
@@ -111,15 +103,17 @@ class TotalService
     {
         if (is_null($key)) {
             $this->additions[] = $amount;
+
             return $this;
         }
-        if (!isset($this->additions[$key])) {
+        if (! isset($this->additions[$key])) {
             $this->additions[$key] = [];
         }
-        if (!is_array($this->additions[$key])) {
+        if (! is_array($this->additions[$key])) {
             $this->additions[$key] = [$this->additions[$key]];
         }
         $this->additions[$key][] = $amount;
+
         return $this;
     }
 
@@ -131,15 +125,17 @@ class TotalService
     {
         if (is_null($key)) {
             $this->discounts[] = $amount;
+
             return $this;
         }
-        if (!isset($this->discounts[$key])) {
+        if (! isset($this->discounts[$key])) {
             $this->discounts[$key] = [];
         }
-        if (!is_array($this->discounts[$key])) {
+        if (! is_array($this->discounts[$key])) {
             $this->discounts[$key] = [$this->discounts[$key]];
         }
         $this->discounts[$key][] = $amount;
+
         return $this;
     }
 
@@ -159,6 +155,7 @@ class TotalService
     public function getDiscountTotal(): float
     {
         $totalDiscount = $this->getDiscounts()->sum() + $this->getGlobalDiscountTotal() + $this->getItemDiscountTotal();
+
         return (float) $totalDiscount;
     }
 

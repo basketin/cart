@@ -3,13 +3,12 @@
 namespace Obelaw\Basketin\Cart\Services;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
 use Obelaw\Basketin\Cart\Cart;
 use Obelaw\Basketin\Cart\Events\BasketinCreateCartEvent;
 use Obelaw\Basketin\Cart\Exceptions\CartNotFoundException;
 use Obelaw\Basketin\Cart\Repositories\CartRepository;
-use Obelaw\Basketin\Cart\Services\FieldService;
 use Obelaw\Basketin\Cart\Settings\Config;
-use Illuminate\Support\Traits\Macroable;
 
 class CartService
 {
@@ -18,6 +17,7 @@ class CartService
     public const SESSION_KEY = 'basketin_cart_ulid';
 
     private $currentCart = null;
+
     private Config $config;
 
     /**
@@ -26,7 +26,7 @@ class CartService
     public function __construct(
         private CartRepository $cartRepository,
     ) {
-        $this->config = new Config();
+        $this->config = new Config;
     }
 
     /**
@@ -45,18 +45,18 @@ class CartService
             }
         }
 
-        $service = new static(new CartRepository());
+        $service = new static(new CartRepository);
 
         return $service->buildCart($ulid, $currency, $cartType, $createIfNotExists);
     }
 
     protected function buildCart(?string $ulid = null, string $currency = 'USD', ?string $cartType = null, bool $createIfNotExists = true): self
     {
-        $sessionKey = $cartType . '_' . self::SESSION_KEY;
+        $sessionKey = $cartType.'_'.self::SESSION_KEY;
 
         if ($createIfNotExists) {
             $ulid = $ulid ?? session($sessionKey, null) ?? (string) Str::ulid();
-            if (!$cart = $this->cartRepository->getCartByUlid($ulid)) {
+            if (! $cart = $this->cartRepository->getCartByUlid($ulid)) {
                 $cart = $this->cartRepository->createNewCart($ulid, $currency, $cartType);
             }
 
@@ -69,8 +69,8 @@ class CartService
         }
 
         $ulid = $ulid ?? session($sessionKey, null);
-        if (!$cart = $this->cartRepository->getCartByUlid($ulid)) {
-            throw new CartNotFoundException();
+        if (! $cart = $this->cartRepository->getCartByUlid($ulid)) {
+            throw new CartNotFoundException;
         }
 
         $this->currentCart = $cart;
@@ -85,6 +85,7 @@ class CartService
     public function config(Config $config): self
     {
         $this->config = $config;
+
         return $this;
     }
 
@@ -174,10 +175,11 @@ class CartService
     public function preparingOrder()
     {
         $order = $this->currentCart->order()->first();
-        if (!$order) {
+        if (! $order) {
             $order = $this->currentCart->order()->create();
         }
         $this->fields()->set('order_reference', $order->reference);
+
         return $order;
     }
 
@@ -196,12 +198,14 @@ class CartService
     public function checkoutIt(?string $cartType = null): bool
     {
         $updated = $this->getCart()->update([
-            'status' => 'checkout'
+            'status' => 'checkout',
         ]);
         if ($updated) {
-            session()->forget($cartType . '_' . self::SESSION_KEY);
+            session()->forget($cartType.'_'.self::SESSION_KEY);
+
             return true;
         }
+
         return false;
     }
 }

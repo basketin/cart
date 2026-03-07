@@ -32,7 +32,7 @@ test('Get Cart', function () {
 
 test('Check Session Cart', function () {
     $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
-    expect($cart->getUlid())->toEqual(session('_' . CartService::SESSION_KEY));
+    expect($cart->getUlid())->toEqual(session('_'.CartService::SESSION_KEY));
 });
 
 test('Open Cart', function () {
@@ -62,13 +62,12 @@ test('Init And Open Cart By Session', function () {
 
     $cart = CartManagement::make(null, 'USD', null, false);
 
-    expect($cart->getUlid())->toEqual(session('_' . CartService::SESSION_KEY));
+    expect($cart->getUlid())->toEqual(session('_'.CartService::SESSION_KEY));
 });
 
 test('Open Cart - CartNotFound', function () {
     CartManagement::make('02HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD', null, false);
 })->throws(CartNotFoundException::class, 'Cart Not Found');
-
 
 test('Count Products', function () {
     $product = Product::create([

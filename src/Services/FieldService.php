@@ -4,7 +4,6 @@ namespace Obelaw\Basketin\Cart\Services;
 
 use Obelaw\Basketin\Cart\Models\Cart;
 
-
 class FieldService
 {
     /**
@@ -31,6 +30,7 @@ class FieldService
 
     /**
      * Get all fields.
+     *
      * @return array<string, mixed>
      */
     public function all(): array
@@ -40,9 +40,6 @@ class FieldService
 
     /**
      * Set a field value.
-     * @param string $key
-     * @param mixed $value
-     * @return mixed
      */
     public function set(string $key, mixed $value): mixed
     {
@@ -50,6 +47,7 @@ class FieldService
             $field->field_value = $value;
             $field->save();
             $this->refresh();
+
             return $field;
         }
         $created = $this->cart->fields()->create([
@@ -57,14 +55,12 @@ class FieldService
             'field_value' => $value,
         ]);
         $this->refresh();
+
         return $created;
     }
 
     /**
      * Get a field value.
-     * @param string $key
-     * @param mixed|null $default
-     * @return mixed
      */
     public function get(string $key, mixed $default = null): mixed
     {
@@ -73,8 +69,6 @@ class FieldService
 
     /**
      * Check if a field exists.
-     * @param string $key
-     * @return bool
      */
     public function has(string $key): bool
     {
@@ -83,13 +77,14 @@ class FieldService
 
     /**
      * Remove a field.
-     * @param string $key
+     *
      * @return int Number of deleted records
      */
     public function remove(string $key): int
     {
         $deleted = $this->cart->fields()->where('field_key', $key)->delete();
         $this->refresh();
+
         return $deleted;
     }
 }

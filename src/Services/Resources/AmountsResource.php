@@ -31,6 +31,7 @@ class AmountsResource
                 $total += $value;
             }
         }
+
         return (float) $total;
     }
 

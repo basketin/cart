@@ -1,8 +1,8 @@
 <?php
 
-use Obelaw\Basketin\Cart\Facades\CartManagement;
 use Obelaw\Basketin\Cart\Exceptions\QuoteNotFoundException;
 use Obelaw\Basketin\Cart\Exceptions\QuoteQuantityLimitException;
+use Obelaw\Basketin\Cart\Facades\CartManagement;
 use Obelaw\Basketin\Cart\Settings\Config;
 use Obelaw\Basketin\Cart\Tests\App\Models\Product;
 

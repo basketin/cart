@@ -17,7 +17,7 @@ class Cart
     /**
      * Set the value of cart
      *
-     * @return  self
+     * @return self
      */
     public static function setCart($cart)
     {
