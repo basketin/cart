@@ -24,7 +24,7 @@ class Product extends Model implements IQuote
         return (float) $this->getAttributes()['price'];
     }
 
-    public function getSpecialPriceAttribute(): float|null
+    public function getSpecialPriceAttribute(): ?float
     {
         return ($this->getAttributes()['special_price']) ? (float) $this->getAttributes()['special_price'] : null;
     }

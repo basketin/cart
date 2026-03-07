@@ -6,11 +6,11 @@ trait HasTotal
 {
     abstract public function getOriginalPriceAttribute(): float;
 
-    abstract public function getSpecialPriceAttribute(): float|null;
+    abstract public function getSpecialPriceAttribute(): ?float;
 
     public function getDiscountPriceAttribute(): float
     {
-        if (!$this->special_price) {
+        if (! $this->special_price) {
             return (float) 0;
         }
 

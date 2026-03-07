@@ -12,7 +12,6 @@ use Obelaw\Basketin\Cart\Exceptions\QuoteQuantityLimitException;
 use Obelaw\Basketin\Cart\Models\Cart;
 use Obelaw\Basketin\Cart\Settings\Config;
 
-
 class QuoteService
 {
     /**
@@ -31,6 +30,7 @@ class QuoteService
     {
         if ($item->quote()->where('cart_id', $this->cart->id)->first()) {
             $this->increaseQuote($item, $quantity);
+
             return $this;
         }
 
@@ -43,6 +43,7 @@ class QuoteService
             'quantity' => $quantity,
         ]);
         BasketinAddedQuoteEvent::dispatch($this->cartService->getUlid(), $item, $quantity);
+
         return $this;
     }
 
@@ -52,7 +53,7 @@ class QuoteService
     public function increaseQuote(IQuote $item, int $quantity = 1): self
     {
         $existing = $item->quote()->where('cart_id', $this->cart->id)->first();
-        if (!$existing) {
+        if (! $existing) {
             throw new QuoteNotFoundException;
         }
         if (($existing->quantity + $quantity) > $this->config->get('limit_quote')) {
@@ -60,6 +61,7 @@ class QuoteService
         }
         $existing->increment('quantity', $quantity);
         BasketinIncreaseQuoteEvent::dispatch($this->cartService->getUlid(), $item, $quantity);
+
         return $this;
     }
 
@@ -69,15 +71,17 @@ class QuoteService
     public function decreaseQuote(IQuote $item, int $quantity = 1): bool|self
     {
         $_item = $item->quote()->where('cart_id', $this->cart->id)->first();
-        if (!$_item) {
+        if (! $_item) {
             throw new QuoteNotFoundException;
         }
         if ($_item->quantity <= $quantity) {
             $_item->delete();
+
             return false;
         }
         $_item->decrement('quantity', $quantity);
         BasketinDecreaseQuoteEvent::dispatch($this->cartService->getUlid(), $item, $quantity);
+
         return $this;
     }
 
@@ -95,11 +99,12 @@ class QuoteService
     public function removeQuote(IQuote $item): self
     {
         $_item = $item->quote()->where('cart_id', $this->cart->id)->first();
-        if (!$_item) {
+        if (! $_item) {
             throw new QuoteNotFoundException;
         }
         $_item->delete();
         BasketinRemoveQuoteEvent::dispatch($this->cartService->getUlid(), $item);
+
         return $this;
     }
 

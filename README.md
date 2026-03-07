@@ -8,6 +8,16 @@ Laravel cart library for e-commerce. Provides carts, quotes (line items), totals
 
 ![Basketin Cart Cover](./cover.svg)
 
+# Basketin Cart
+
+Laravel cart library for e-commerce. Provides carts, quotes (line items), totals, coupons, custom fields, and order preparation with a clean API.
+
+[![Packagist](https://img.shields.io/static/v1?label=Packagist&message=basketin/cart&color=blue&logo=packagist&logoColor=white)](https://packagist.org/packages/basketin/cart)
+[![Version](https://poser.pugx.org/basketin/cart/v)](https://packagist.org/packages/basketin/cart)
+[![Packagist Downloads](https://poser.pugx.org/basketin/cart/downloads)](https://packagist.org/packages/basketin/cart)
+
+![Basketin Cart Cover](./cover.svg)
+
 ## Requirements
 
 - PHP 8.1 or 8.2
@@ -39,7 +49,7 @@ php artisan migrate --path=vendor/basketin/cart/database/migrations
 
 ## Quick start
 
-Initialize a cart (creates one if it doesn’t exist) or open an existing cart by ULID and optional type:
+Initialize a cart (creates one if it doesn't exist) or open an existing cart by ULID and optional type:
 
 ```php
 use Obelaw\Basketin\Cart\Facades\CartManagement;
@@ -212,3 +222,5 @@ Issues and PRs are welcome. Please include tests when contributing behavior chan
 ## License
 
 This package is open-sourced software licensed under the MIT license.
+
+Documentation: https://obelaw.com/docs/basketin/introduction
