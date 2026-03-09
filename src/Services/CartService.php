@@ -152,14 +152,6 @@ class CartService
     }
 
     /**
-     * Get field service.
-     */
-    public function fields(): FieldService
-    {
-        return new FieldService($this->currentCart);
-    }
-
-    /**
      * Get totals service.
      */
     public function totals(): TotalService
