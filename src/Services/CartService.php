@@ -5,7 +5,6 @@ namespace Obelaw\Basketin\Cart\Services;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Obelaw\Basketin\Cart\Cart;
-use Obelaw\Basketin\Cart\Events\BasketinCreateCartEvent;
 use Obelaw\Basketin\Cart\Exceptions\CartNotFoundException;
 use Obelaw\Basketin\Cart\Repositories\CartRepository;
 use Obelaw\Basketin\Cart\Settings\Config;
@@ -63,7 +62,6 @@ class CartService
             $this->currentCart = $cart;
             session([$sessionKey => $this->getUlid()]);
             Cart::setCart($this);
-            BasketinCreateCartEvent::dispatch($this->getUlid());
 
             return $this;
         }
