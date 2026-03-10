@@ -1,6 +1,6 @@
 <?php
 
-use Obelaw\Basketin\Cart\Facades\CartManagement;
+use Obelaw\Basketin\Cart\Facades\Cart;
 use Obelaw\Basketin\Cart\Tests\App\Carts\TestCart;
 use Obelaw\Basketin\Cart\Tests\App\Models\Product;
 
@@ -11,7 +11,7 @@ test('Get Item Final Total', function () {
         'price' => 599,
     ]);
 
-    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
 
     $totals = $cart->totals();
@@ -27,7 +27,7 @@ test('Get Discount Total', function () {
 
     ]);
 
-    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
 
     $totals = $cart->totals();
@@ -43,7 +43,7 @@ test('Get Grand Total', function () {
 
     ]);
 
-    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
 
     $totals = $cart->totals();
@@ -59,7 +59,7 @@ test('Set Global Discount Total', function () {
 
     ]);
 
-    $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+    $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
     $cart->quote()->addQuote($product, 1);
 
     $totals = $cart->totals();
@@ -78,7 +78,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -95,7 +95,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -112,7 +112,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -136,7 +136,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -153,7 +153,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -173,7 +173,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -193,7 +193,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -212,7 +212,7 @@ describe('Additions & Discounts', function () {
 
         ]);
 
-        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->quote()->addQuote($product, 1);
 
         $totals = $cart->totals();
@@ -406,7 +406,7 @@ describe('Cart Base Manage', function () {
     });
 
     test('config override with TestCart', function () {
-        $cart = CartManagement::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->config(new \Obelaw\Basketin\Cart\Settings\Config([
             'limit_quote' => 10,
         ]));

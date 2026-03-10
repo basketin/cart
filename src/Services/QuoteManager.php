@@ -8,13 +8,13 @@ use Obelaw\Basketin\Cart\Exceptions\QuoteQuantityLimitException;
 use Obelaw\Basketin\Cart\Models\Cart;
 use Obelaw\Basketin\Cart\Settings\Config;
 
-class QuoteService
+class QuoteManager
 {
     /**
-     * QuoteService constructor.
+     * QuoteManager constructor.
      */
     public function __construct(
-        private CartService $cartService,
+        private CartManager $cartService,
         private Cart $cart,
         private Config $config
     ) {}

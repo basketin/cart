@@ -8,7 +8,7 @@ use Illuminate\Support\Traits\Macroable;
 use Obelaw\Basketin\Cart\Services\Resources\AmountsResource;
 use Obelaw\Basketin\Cart\Traits\HasTotal;
 
-class TotalService
+class TotalManager
 {
     use Macroable;
 
@@ -23,12 +23,12 @@ class TotalService
     private array $discounts = [];
 
     /**
-     * TotalService constructor.
+     * TotalManager constructor.
      *
      * @throws Exception
      */
     public function __construct(
-        private CartService $cartService,
+        private CartManager $cartService,
         private Collection $quotes,
     ) {
         if ($quotes->isNotEmpty()) {
@@ -48,7 +48,7 @@ class TotalService
     /**
      * Get the cart service.
      */
-    public function getCartService(): CartService
+    public function getCartService(): CartManager
     {
         return $this->cartService;
     }

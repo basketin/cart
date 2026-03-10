@@ -9,7 +9,7 @@ use Obelaw\Basketin\Cart\Exceptions\CartNotFoundException;
 use Obelaw\Basketin\Cart\Repositories\CartRepository;
 use Obelaw\Basketin\Cart\Settings\Config;
 
-class CartService
+class CartManager
 {
     use Macroable;
 
@@ -20,7 +20,7 @@ class CartService
     private Config $config;
 
     /**
-     * CartService constructor.
+     * CartManager constructor.
      */
     public function __construct(
         private CartRepository $cartRepository,
@@ -146,17 +146,17 @@ class CartService
     /**
      * Get quote service.
      */
-    public function quote(): QuoteService
+    public function quote(): QuoteManager
     {
-        return new QuoteService($this, $this->currentCart, $this->config);
+        return new QuoteManager($this, $this->currentCart, $this->config);
     }
 
     /**
      * Get totals service.
      */
-    public function totals(): TotalService
+    public function totals(): TotalManager
     {
-        return new TotalService($this, $this->currentCart->refresh()->quotes);
+        return new TotalManager($this, $this->currentCart->refresh()->quotes);
     }
 
     /**

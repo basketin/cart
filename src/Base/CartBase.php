@@ -4,11 +4,11 @@ namespace Obelaw\Basketin\Cart\Base;
 
 use Obelaw\Basketin\Cart\Contracts\HasManageConfig;
 use Obelaw\Basketin\Cart\Contracts\HasManageTotals;
-use Obelaw\Basketin\Cart\Services\CartService;
-use Obelaw\Basketin\Cart\Services\TotalService;
+use Obelaw\Basketin\Cart\Services\CartManager;
+use Obelaw\Basketin\Cart\Services\TotalManager;
 use Obelaw\Basketin\Cart\Settings\Config;
 
-class CartBase extends CartService
+class CartBase extends CartManager
 {
     public function getConfig(): Config
     {
@@ -21,7 +21,7 @@ class CartBase extends CartService
         return $config;
     }
 
-    public function totals(): TotalService
+    public function totals(): TotalManager
     {
         $totals = parent::totals();
 
