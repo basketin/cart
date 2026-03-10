@@ -3,23 +3,18 @@
 namespace Obelaw\Basketin\Cart\Services;
 
 use Obelaw\Basketin\Cart\Contracts\IQuote;
-use Obelaw\Basketin\Cart\Events\BasketinAddedQuoteEvent;
-use Obelaw\Basketin\Cart\Events\BasketinDecreaseQuoteEvent;
-use Obelaw\Basketin\Cart\Events\BasketinIncreaseQuoteEvent;
-use Obelaw\Basketin\Cart\Events\BasketinRemoveQuoteEvent;
 use Obelaw\Basketin\Cart\Exceptions\QuoteNotFoundException;
 use Obelaw\Basketin\Cart\Exceptions\QuoteQuantityLimitException;
 use Obelaw\Basketin\Cart\Models\Cart;
 use Obelaw\Basketin\Cart\Settings\Config;
 
-
-class QuoteService
+class QuoteManager
 {
     /**
-     * QuoteService constructor.
+     * QuoteManager constructor.
      */
     public function __construct(
-        private CartService $cartService,
+        private CartManager $cartService,
         private Cart $cart,
         private Config $config
     ) {}
@@ -31,6 +26,7 @@ class QuoteService
     {
         if ($item->quote()->where('cart_id', $this->cart->id)->first()) {
             $this->increaseQuote($item, $quantity);
+
             return $this;
         }
 
@@ -42,7 +38,7 @@ class QuoteService
             'cart_id' => $this->cart->id,
             'quantity' => $quantity,
         ]);
-        BasketinAddedQuoteEvent::dispatch($this->cartService->getUlid(), $item, $quantity);
+
         return $this;
     }
 
@@ -52,14 +48,14 @@ class QuoteService
     public function increaseQuote(IQuote $item, int $quantity = 1): self
     {
         $existing = $item->quote()->where('cart_id', $this->cart->id)->first();
-        if (!$existing) {
+        if (! $existing) {
             throw new QuoteNotFoundException;
         }
         if (($existing->quantity + $quantity) > $this->config->get('limit_quote')) {
             throw new QuoteQuantityLimitException;
         }
         $existing->increment('quantity', $quantity);
-        BasketinIncreaseQuoteEvent::dispatch($this->cartService->getUlid(), $item, $quantity);
+
         return $this;
     }
 
@@ -69,15 +65,16 @@ class QuoteService
     public function decreaseQuote(IQuote $item, int $quantity = 1): bool|self
     {
         $_item = $item->quote()->where('cart_id', $this->cart->id)->first();
-        if (!$_item) {
+        if (! $_item) {
             throw new QuoteNotFoundException;
         }
         if ($_item->quantity <= $quantity) {
             $_item->delete();
+
             return false;
         }
         $_item->decrement('quantity', $quantity);
-        BasketinDecreaseQuoteEvent::dispatch($this->cartService->getUlid(), $item, $quantity);
+
         return $this;
     }
 
@@ -95,11 +92,11 @@ class QuoteService
     public function removeQuote(IQuote $item): self
     {
         $_item = $item->quote()->where('cart_id', $this->cart->id)->first();
-        if (!$_item) {
+        if (! $_item) {
             throw new QuoteNotFoundException;
         }
         $_item->delete();
-        BasketinRemoveQuoteEvent::dispatch($this->cartService->getUlid(), $item);
+
         return $this;
     }
 

@@ -4,7 +4,7 @@ namespace Obelaw\Basketin\Cart\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class CartManagement extends Facade
+class Cart extends Facade
 {
     protected static function getFacadeAccessor()
     {

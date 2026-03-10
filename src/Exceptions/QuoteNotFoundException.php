@@ -3,10 +3,11 @@
 namespace Obelaw\Basketin\Cart\Exceptions;
 
 use Exception;
+use Throwable;
 
 class QuoteNotFoundException extends Exception
 {
-    public function __construct($message = 'Quote Not Found', $code = 0, Throwable $previous = null)
+    public function __construct($message = 'Quote Not Found', $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

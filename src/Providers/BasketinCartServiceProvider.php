@@ -3,7 +3,7 @@
 namespace Obelaw\Basketin\Cart\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Obelaw\Basketin\Cart\Services\CartService;
+use Obelaw\Basketin\Cart\Services\CartManager;
 
 class BasketinCartServiceProvider extends ServiceProvider
 {
@@ -14,10 +14,10 @@ class BasketinCartServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('basketin.cart.cartservice', CartService::class);
+        $this->app->singleton('basketin.cart.cartservice', CartManager::class);
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/cart.php',
+            __DIR__.'/../../config/cart.php',
             'basketin.cart'
         );
     }
@@ -31,11 +31,11 @@ class BasketinCartServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../../config/cart.php' => config_path('basketin/cart.php'),
+                __DIR__.'/../../config/cart.php' => config_path('basketin/cart.php'),
             ], ['basketin-cart-config']);
 
             if (config('basketin.cart.setup.auto_migrate')) {
-                $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+                $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
             }
         }
     }

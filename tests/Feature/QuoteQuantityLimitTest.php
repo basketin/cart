@@ -1,6 +1,6 @@
 <?php
 
-use Obelaw\Basketin\Cart\Facades\CartManagement;
+use Obelaw\Basketin\Cart\Facades\Cart;
 use Obelaw\Basketin\Cart\Settings\Config;
 use Obelaw\Basketin\Cart\Tests\App\Models\Product;
 
@@ -13,9 +13,9 @@ describe('QuoteQuantityLimit', function () {
 
         ]);
 
-        $cart = CartManagement::initCart('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
+        $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
         $cart->config(new Config([
-            'limit_quote' => 15
+            'limit_quote' => 15,
         ]));
         $cart->quote()->addQuote($product, 1);
         $cart->quote()->increaseQuote($product, 5);

@@ -11,7 +11,8 @@ class Config
 
     /**
      * Config constructor.
-     * @param array<string, mixed> $config
+     *
+     * @param  array<string, mixed>  $config
      */
     public function __construct(array $config = [])
     {
@@ -20,6 +21,7 @@ class Config
 
     /**
      * Get default configurations
+     *
      * @return array<string, mixed>
      */
     public function getDefaultConfig(): array
@@ -31,6 +33,7 @@ class Config
 
     /**
      * Get all configuration values
+     *
      * @return array<string, mixed>
      */
     public function all(): array
@@ -41,5 +44,12 @@ class Config
     public function get(string $key, mixed $default = null): mixed
     {
         return $this->config[$key] ?? $default;
+    }
+
+    public function set(string $key, mixed $value): self
+    {
+        $this->config[$key] = $value;
+
+        return $this;
     }
 }
