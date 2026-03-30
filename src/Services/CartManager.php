@@ -160,28 +160,6 @@ class CartManager
     }
 
     /**
-     * Prepare order for cart.
-     */
-    public function preparingOrder()
-    {
-        $order = $this->currentCart->order()->first();
-        if (! $order) {
-            $order = $this->currentCart->order()->create();
-        }
-
-        return $order;
-    }
-
-    /**
-     * Sync order with cart.
-     */
-    public function syncOrder($order): void
-    {
-        $preparingOrder = $this->preparingOrder();
-        $order->cartOrder()->save($preparingOrder);
-    }
-
-    /**
      * Checkout cart.
      */
     public function checkoutIt(?string $cartType = null): bool
