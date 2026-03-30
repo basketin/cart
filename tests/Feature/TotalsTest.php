@@ -1,6 +1,7 @@
 <?php
 
 use Obelaw\Basketin\Cart\Facades\Cart;
+use Obelaw\Basketin\Cart\Settings\Config;
 use Obelaw\Basketin\Cart\Tests\App\Carts\TestCart;
 use Obelaw\Basketin\Cart\Tests\App\Models\Product;
 
@@ -407,7 +408,7 @@ describe('Cart Base Manage', function () {
 
     test('config override with TestCart', function () {
         $cart = Cart::make('01HF7V7N1MG9SDFPQYWXDNHR9Q', 'USD');
-        $cart->config(new \Obelaw\Basketin\Cart\Settings\Config([
+        $cart->config(new Config([
             'limit_quote' => 10,
         ]));
 
