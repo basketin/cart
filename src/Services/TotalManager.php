@@ -154,7 +154,7 @@ class TotalManager
      */
     public function getDiscountTotal(): float
     {
-        $totalDiscount = $this->getDiscounts()->sum() + $this->getGlobalDiscountTotal() + $this->getItemDiscountTotal();
+        $totalDiscount = $this->getDiscounts()->sum() + $this->getGlobalDiscountTotal();
 
         return (float) $totalDiscount;
     }

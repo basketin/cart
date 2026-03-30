@@ -331,12 +331,12 @@ describe('Cart Base Manage', function () {
         // subtotal: 499 * 2 = 998
         // item discount: (599-499) * 2 = 200
         // manageTotals discount: 100
-        // total discount: 200 + 100 = 300
-        // grand total: 998 - 100 = 898 (item discounts already subtracted from price)
+        // total discount: 200
+        // grand total: 998 - 200 = 798 (item discounts already subtracted from price)
         expect($totals->getSubTotal())->toEqual(998);
         expect($totals->getItemDiscountTotal())->toEqual(200);
-        expect($totals->getDiscountTotal())->toEqual(300);
-        expect($totals->getGrandTotal())->toEqual(698);
+        expect($totals->getDiscountTotal())->toEqual(100);
+        expect($totals->getGrandTotal())->toEqual(898);
     });
 
     test('manageTotals on empty cart', function () {
