@@ -10,6 +10,8 @@ use Obelaw\Basketin\Cart\Settings\Config;
 
 class CartBase extends CartManager
 {
+    protected ?string $checkoutHandler = null;
+
     public function getConfig(): Config
     {
         $config = parent::getConfig();
@@ -30,5 +32,12 @@ class CartBase extends CartManager
         }
 
         return $totals;
+    }
+
+    public function checkoutIt(?string $cartType = null, callable|array|string|object|null $action = null): bool
+    {
+        $action = $action ?? $this->checkoutHandler;
+
+        return parent::checkoutIt($cartType, $action);
     }
 }

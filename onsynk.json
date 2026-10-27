@@ -1,0 +1,55 @@
+{
+  "version": "1.0.0",
+  "skills": {
+    "obelaw/domain-driven-design-standards": {
+      "version": "1.0.0",
+      "description": "Commit message suggester",
+      "downloadUrl": "https://github.com/obelaw/skill-domain-driven-design-standards/archive/refs/heads/main.zip",
+      "files": [
+        "SKILL.md",
+        "assets/templates/01-introduction-executive-overview.md",
+        "assets/templates/02-bounded-context-domain-classification.md",
+        "assets/templates/03-ubiquitous-language-glossary.md",
+        "assets/templates/04-domain-topology-structural-model.md",
+        "assets/templates/05-domain-invariants-business-rules.md",
+        "assets/templates/06-operational-lifecycles-state-machines.md",
+        "assets/templates/07-domain-events-integration-contracts.md",
+        "assets/templates/08-audit-trails-compensating-policies.md",
+        "assets/templates/main.json.template",
+        "onsynk.json",
+        "references/blueprint-structure.md",
+        "references/reading-list.md",
+        "references/strategic-design.md",
+        "references/tactical-modeling.md",
+        "references/ubiquitous-language.md",
+        "scripts/scaffold-blueprint.js",
+        "scripts/validate-blueprint.js"
+      ],
+      "name": "obelaw/domain-driven-design-standards",
+      "installedAt": "2026-10-27T13:24:04.113Z",
+      "updatedAt": "2026-10-27T13:24:04.113Z"
+    },
+    "onsynk/gitsynk": {
+      "version": "1.0.0",
+      "description": "Universal, language-agnostic autonomous engineering workflow integrating with Git and GitHub CLI (gh)",
+      "downloadUrl": "https://github.com/onsynk/gitsynk/archive/refs/heads/main.zip",
+      "files": [
+        ".gitignore",
+        "README.md",
+        "SKILL.md",
+        "onsynk.json",
+        "references/plan_format.md",
+        "references/stack_matrix.md",
+        "scripts/create_plan.sh",
+        "scripts/create_task.sh",
+        "scripts/detect_quality_tools.sh",
+        "scripts/fetch_task.sh",
+        "scripts/open_pr.sh",
+        "scripts/parse_plan.sh"
+      ],
+      "name": "onsynk/gitsynk",
+      "installedAt": "2026-10-27T14:32:16.153Z",
+      "updatedAt": "2026-10-27T14:32:16.153Z"
+    }
+  }
+}
