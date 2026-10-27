@@ -11,6 +11,7 @@ use Obelaw\Basketin\Cart\Services\CartManager;
 class TestHandlerCart extends CartBase implements HasCheckoutHandler
 {
     public static bool $called = false;
+
     public static ?CartManager $receivedCart = null;
 
     public function handle(CartManager $cart): void
@@ -23,6 +24,7 @@ class TestHandlerCart extends CartBase implements HasCheckoutHandler
 class TestPlacedCartCart extends CartBase implements HasPlacedCart
 {
     public static bool $called = false;
+
     public static ?CartManager $receivedCart = null;
 
     public function placedCart(CartManager $cart): void
@@ -35,7 +37,9 @@ class TestPlacedCartCart extends CartBase implements HasPlacedCart
 class TestOrderHandlerAction
 {
     public static bool $handled = false;
+
     public static ?CartManager $passedCart = null;
+
     public static ?CartModel $passedCartModel = null;
 
     public function handle(CartManager $cart, CartModel $cartModel): void
@@ -56,7 +60,9 @@ class TestOrderHandlerAction
 class TestPlacedCartAction
 {
     public static bool $called = false;
+
     public static ?CartManager $passedCart = null;
+
     public static ?CartModel $passedCartModel = null;
 
     public function placedCart(CartManager $cart, CartModel $cartModel): void
@@ -112,7 +118,9 @@ class TestCartWithPlacedCartConfiguredHandler extends CartBase
 class TestOrderService
 {
     public static bool $handled = false;
+
     public static ?CartManager $passedCart = null;
+
     public static ?CartModel $passedCartModel = null;
 
     public function createOrder(CartManager $cart, CartModel $cartModel): void
