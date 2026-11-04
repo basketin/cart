@@ -1,2 +1,4 @@
+/.agents
+/.onsynk
 /vendor
 /composer.lock

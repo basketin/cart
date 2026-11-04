@@ -2,10 +2,15 @@
 
 namespace Obelaw\Basketin\Cart\Services;
 
+use Closure;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Obelaw\Basketin\Cart\Cart;
+use Obelaw\Basketin\Cart\Contracts\HasCheckoutHandler;
+use Obelaw\Basketin\Cart\Contracts\HasPlacedCart;
 use Obelaw\Basketin\Cart\Exceptions\CartNotFoundException;
+use Obelaw\Basketin\Cart\Exceptions\InvalidCheckoutHandlerException;
+use Obelaw\Basketin\Cart\Models\Cart as CartModel;
 use Obelaw\Basketin\Cart\Repositories\CartRepository;
 use Obelaw\Basketin\Cart\Settings\Config;
 
@@ -162,7 +167,7 @@ class CartManager
     /**
      * Checkout cart.
      */
-    public function checkoutIt(?string $cartType = null): bool
+    public function checkoutIt(?string $cartType = null, callable|array|string|object|null $action = null): bool
     {
         $updated = $this->getCart()->update([
             'status' => 'checkout',
@@ -170,9 +175,85 @@ class CartManager
         if ($updated) {
             session()->forget($cartType.'_'.self::SESSION_KEY);
 
+            $actionToCall = $action;
+
+            if (! $actionToCall) {
+                if ($this instanceof HasPlacedCart || method_exists($this, 'placedCart')) {
+                    $actionToCall = [$this, 'placedCart'];
+                } elseif ($this instanceof HasCheckoutHandler || method_exists($this, 'handle')) {
+                    $actionToCall = [$this, 'handle'];
+                }
+            }
+
+            if (! $actionToCall && function_exists('config')) {
+                $actionToCall = config('basketin.cart.checkout_handler');
+            }
+
+            if ($actionToCall) {
+                $this->callCheckoutAction($actionToCall);
+            }
+
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * Call checkout action from class or callable.
+     */
+    private function callCheckoutAction(callable|array|string|object $action): mixed
+    {
+        if ($action instanceof Closure) {
+            return $action($this, $this->getCart());
+        }
+
+        if (is_array($action) && count($action) === 2) {
+            [$class, $method] = $action;
+            $instance = is_string($class) ? (function_exists('app') ? app($class) : new $class) : $class;
+            $action = [$instance, $method];
+        } elseif (is_string($action) && str_contains($action, '@')) {
+            [$class, $method] = explode('@', $action, 2);
+            $instance = function_exists('app') ? app($class) : new $class;
+            $action = [$instance, $method];
+        } else {
+            if (is_string($action) && ! class_exists($action) && (! function_exists('app') || ! app()->has($action))) {
+                throw new InvalidCheckoutHandlerException(
+                    sprintf('Checkout handler [%s] not found.', $action)
+                );
+            }
+
+            $instance = is_string($action) ? (function_exists('app') ? app($action) : new $action) : $action;
+
+            if (is_object($instance)) {
+                if (method_exists($instance, 'placedCart')) {
+                    $action = [$instance, 'placedCart'];
+                } elseif (method_exists($instance, 'handle')) {
+                    $action = [$instance, 'handle'];
+                } elseif (is_callable($instance)) {
+                    $action = $instance;
+                } else {
+                    throw new InvalidCheckoutHandlerException(
+                        sprintf('Checkout handler class [%s] must implement "placedCart", "handle", or be invokable.', get_class($instance))
+                    );
+                }
+            }
+        }
+
+        if (function_exists('app')) {
+            return app()->call($action, [
+                'cart' => $this,
+                'cartModel' => $this->getCart(),
+                self::class => $this,
+                static::class => $this,
+                CartModel::class => $this->getCart(),
+            ]);
+        }
+
+        if (is_callable($action)) {
+            return $action($this, $this->getCart());
+        }
+
+        return null;
     }
 }
