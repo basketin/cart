@@ -21,7 +21,8 @@
     },
     "require": {
         "php": "^8.3",
-        "laravel/framework": "^11.0||^12.0"
+        "laravel/framework": "^11.0||^12.0",
+        "obelaw/ium": "dev-main"
     },
     "require-dev": {
         "orchestra/testbench": "^10.9",
@@ -40,6 +41,7 @@
             "pestphp/pest-plugin": true
         }
     },
+    "minimum-stability": "dev",
     "scripts": {
         "test": "./vendor/bin/pest"
     }

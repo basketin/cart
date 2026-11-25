@@ -2,19 +2,16 @@
 
 namespace Obelaw\Basketin\Cart\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Obelaw\Basketin\Cart\Traits\HasConnection;
+use Obelaw\Basketin\Cart\Base\ModelBase;
 
-class Quote extends Model
+class Quote extends ModelBase
 {
-    use HasConnection;
-
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'basketin_cart_quotes';
+    protected $table = 'cart_quotes';
 
     /**
      * The attributes that are mass assignable.
