@@ -19,6 +19,7 @@ test('add_quote dispatches CartActionUpdated event', function () {
 
     Event::assertDispatched(CartActionUpdated::class, function ($event) {
         dump($event);
+
         return $event->action === 'add_quote'
             && $event->payload['item_type'] === 'Obelaw\Basketin\Cart\Tests\App\Models\Product'
             && $event->payload['quantity'] === 1;

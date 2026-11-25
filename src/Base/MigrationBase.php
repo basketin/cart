@@ -8,8 +8,6 @@ abstract class MigrationBase extends StackMigrationBase
 {
     /**
      * Table postfix.
-     *
-     * @var string|null $module
      */
     protected ?string $module = 'basketin_';
 }

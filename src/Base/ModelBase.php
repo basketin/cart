@@ -8,8 +8,6 @@ class ModelBase extends StackBaseModel
 {
     /**
      * Optional module name for table prefixing.
-     *
-     * @var string|null $module
      */
     protected ?string $module = 'basketin_';
 }

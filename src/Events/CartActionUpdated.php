@@ -11,9 +11,13 @@ class CartActionUpdated
     use Dispatchable, SerializesModels;
 
     public string $eventId;
+
     public string $cartIdentifier;
+
     public string $action;
+
     public array $payload;
+
     public int $timestamp;
 
     public function __construct(string $cartIdentifier, string $action, array $payload = [])
