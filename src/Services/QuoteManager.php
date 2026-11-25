@@ -3,6 +3,7 @@
 namespace Obelaw\Basketin\Cart\Services;
 
 use Obelaw\Basketin\Cart\Contracts\IQuote;
+use Obelaw\Basketin\Cart\Events\CartActionUpdated;
 use Obelaw\Basketin\Cart\Exceptions\QuoteNotFoundException;
 use Obelaw\Basketin\Cart\Exceptions\QuoteQuantityLimitException;
 use Obelaw\Basketin\Cart\Models\Cart;
@@ -36,6 +37,12 @@ class QuoteManager
 
         $item->quote()->create([
             'cart_id' => $this->cart->id,
+            'quantity' => $quantity,
+        ]);
+
+        CartActionUpdated::dispatch($this->cart->ulid, 'add_quote', [
+            'item_type' => $item->quote()->getMorphClass(),
+            'item_id' => $item->quote()->first()->item_id,
             'quantity' => $quantity,
         ]);
 
